@@ -1,0 +1,523 @@
+---
+title: "Critical Thinking - Main Analyses"
+Author: "Jiayin Zhi"
+date: "2025-08-17"
+output: 
+  html_document:
+    code_folding: hide    
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    df_print: paged   
+---
+
+# Data
+````{r}
+library(tidyverse)
+library(readxl)
+library(janitor)
+
+script_dir <- dirname(rstudioapi::getSourceEditorContext()$path)
+read_first_sheet <- function(path) {
+  read_excel(path, sheet = 1) %>% clean_names()
+}
+
+df_main   <- read_first_sheet(file.path(script_dir, "study_data", "main_study_data.xlsx"))
+df_essay  <- read_first_sheet(file.path(script_dir, "study_data", "essay_graded.xlsx"))
+df_recall <- read_first_sheet(file.path(script_dir, "study_data", "recall_graded.xlsx"))
+````
+
+```{r}
+# Derive experimental factors from condition labels
+df_main <- df_main %>%
+  mutate(
+    condition = factor(condition,
+      levels = c("10_control","10_continuous","10_early","10_late",
+                 "30_control","30_continuous","30_early","30_late")),
+    time_availability = factor(
+      case_when(str_starts(as.character(condition), "10") ~ "Insufficient",
+                str_starts(as.character(condition), "30") ~ "Sufficient"),
+      levels = c("Insufficient","Sufficient")),
+    ai_access = factor(
+      case_when(str_detect(as.character(condition), "early")      ~ "EarlyAI",
+                str_detect(as.character(condition), "continuous") ~ "ContinuousAI",
+                str_detect(as.character(condition), "late")       ~ "LateAI",
+                str_detect(as.character(condition), "control")    ~ "NoAI"),
+      levels = c("EarlyAI","ContinuousAI","LateAI","NoAI"))
+  )
+
+# Recode covariates to ordered factors and 1–5 numeric scores
+levels_llm_freq <- c("Never", "Rarely, about 1–2 times a month",
+                     "Sometimes, about 3–4 times a month",
+                     "Often, about twice a week",
+                     "Always, about once or more a day")
+levels_llm_att  <- c("Very negative", "Somewhat negative",
+                     "Neither negative nor positive",
+                     "Somewhat positive", "Very positive")
+levels_conf     <- c("Not at all confident", "Slightly confident",
+                     "Moderately confident", "Very confident",
+                     "Extremely confident")
+
+df_main <- df_main %>%
+  mutate(
+    llm_use_frequency_num = as.integer(factor(llm_use_frequency, levels = levels_llm_freq, ordered = TRUE)),
+    llm_attitude_num      = as.integer(factor(llm_attitude,      levels = levels_llm_att,  ordered = TRUE)),
+    self_efficacy_num     = as.integer(factor(self_efficacy,      levels = levels_conf,     ordered = TRUE)),
+    ai_confidence_num     = as.integer(factor(ai_confidence,      levels = levels_conf,     ordered = TRUE))
+  )
+
+# Sample sizes per cell
+df_main %>% count(time_availability, ai_access)
+```
+
+```{r}
+# Chi-square test for sample size balance across conditions
+n_observed <- df_main %>% count(time_availability, ai_access) %>% pull(n)
+chisq.test(n_observed)
+
+chisq.test(df_main %>% count(time_availability) %>% pull(n))
+chisq.test(df_main %>% count(ai_access) %>% pull(n))
+```
+
+
+## Demographics
+```{r}
+library(gtsummary)
+
+df_main %>%
+  select(gender, race, age, education) %>%
+  tbl_summary(
+    statistic = list(
+      all_continuous() ~ "{mean} ({sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    missing = "no",
+    label = list(
+      gender ~ "Gender",
+      race ~ "Race/Ethnicity",
+      age ~ "Age",
+      education ~ "Education"
+    )
+  ) %>%
+  modify_header(label ~ "**Characteristic**") %>%
+  modify_spanning_header(all_stat_cols() ~ "**N = {N}**")
+```
+
+
+# Main Analyses
+All analyses follow the same structure: two-way ANCOVA (Time Availability × AI Access) with Type III sums of squares, controlling for `llm_use_frequency_num`, `llm_attitude_num`, `self_efficacy_num`, and `ai_confidence_num`. Tukey HSD post-hoc comparisons are conducted when a significant main or interaction effect is found.
+## Helper Function
+```{r}
+library(car)
+library(emmeans)
+
+covariates <- c("llm_use_frequency_num", "llm_attitude_num", "self_efficacy_num", "ai_confidence_num")
+
+run_ancova <- function(data, dv) {
+  old_contr <- options(contrasts = c("contr.sum", "contr.poly"))
+  on.exit(options(old_contr))
+  
+  # Fit ANCOVA, dropping covariates if needed
+  model <- NULL
+  for (i in 0:length(covariates)) {
+    covs <- covariates[seq_len(length(covariates) - i)]
+    f <- if (length(covs) > 0) {
+      as.formula(paste(dv, "~ time_availability * ai_access +", paste(covs, collapse = " + ")))
+    } else {
+      as.formula(paste(dv, "~ time_availability * ai_access"))
+    }
+    model <- try(lm(f, data = data), silent = TRUE)
+    if (!inherits(model, "try-error")) {
+      cat(dv, "— covariates:", if (length(covs) > 0) paste(covs, collapse = ", ") else "none", "\n")
+      break
+    }
+  }
+  
+  # Type III ANCOVA
+  anova_res <- Anova(model, type = 3)
+  cat("\n--- Type III ANCOVA ---\n")
+  print(anova_res)
+  
+  # Estimated Marginal Means
+  cat("\n--- Estimated Marginal Means ---\n")
+  print(summary(emmeans(model, ~ ai_access * time_availability)))
+  
+  # Post-hoc Tukey if significant
+  p_vals <- anova_res[c("time_availability", "ai_access", "time_availability:ai_access"), "Pr(>F)"]
+  
+  if (any(p_vals < 0.05, na.rm = TRUE)) {
+    cat("\n--- Tukey: AI Access within Time Availability ---\n")
+    print(summary(contrast(emmeans(model, ~ ai_access | time_availability), method = "tukey")))
+    
+    cat("\n--- Tukey: Time Availability within AI Access ---\n")
+    print(summary(contrast(emmeans(model, ~ time_availability | ai_access), method = "pairwise")))
+  } else {
+    cat("\nNo significant main or interaction effects — post-hoc tests skipped.\n")
+  }
+  
+  invisible(model)
+}
+
+desc_by_cell <- function(data, dv) {
+  data %>%
+    group_by(time_availability, ai_access) %>%
+    summarise(N = sum(!is.na(.data[[dv]])),
+              M = round(mean(.data[[dv]], na.rm = TRUE), 2),
+              SD = round(sd(.data[[dv]], na.rm = TRUE), 2),
+              .groups = "drop")
+}
+```
+
+## Essay
+```{r}
+# Merge essay scores
+df_essay_analysis <- df_main %>%
+  left_join(
+    df_essay %>%
+      mutate(
+        essay_total_score = number_of_coded_arguments + relevance + trustworthiness -
+                            falsehoods_fabrications - writing_errors - repeated_arguments,
+        mybias_score = abs(number_of_coded_pro_arguments - number_of_coded_con_arguments)
+      ) %>%
+      select(participant_id, essay_total_score, mybias_score, number_of_coded_arguments),
+    by = "participant_id"
+  )
+
+# Essay Total Score
+desc_by_cell(df_essay_analysis, "essay_total_score")
+model_essay <- run_ancova(df_essay_analysis, "essay_total_score")
+
+# Number of Coded Arguments
+desc_by_cell(df_essay_analysis, "number_of_coded_arguments")
+model_args <- run_ancova(df_essay_analysis, "number_of_coded_arguments")
+
+# Myside Bias
+desc_by_cell(df_essay_analysis, "mybias_score")
+model_bias <- run_ancova(df_essay_analysis, "mybias_score")
+```
+
+## Recall
+```{r}
+df_recall_analysis <- df_main %>%
+  left_join(
+    df_recall %>% select(participant_id, score_of_summarizing_recalled_documents),
+    by = "participant_id"
+  )
+
+desc_by_cell(df_recall_analysis, "score_of_summarizing_recalled_documents")
+model_recall <- run_ancova(df_recall_analysis, "score_of_summarizing_recalled_documents")
+```
+
+## Evaluation
+```{r}
+# Relevance, Trustworthiness, Stance, and Total Correctness
+for (dv in c("relevance_correctness", "trust_correctness", "stance_correctness", "total_correctness")) {
+  cat("\n========================================\n")
+  desc_by_cell(df_main, dv) %>% print()
+  run_ancova(df_main, dv)
+}
+```
+
+## Comprehension 
+```{r}
+desc_by_cell(df_main, "comprehension_correctness_percent")
+model_comprehension <- run_ancova(df_main, "comprehension_correctness_percent")
+```
+
+# Plots
+## Helper Function
+```{r}
+library(tidyverse)
+library(ggtext)
+library(scales)
+
+# Shared styling
+pal <- c("Insufficient" = "#FF8C00", "Sufficient" = "#33A833")
+cond_levels <- c("Early LLM access", "Continuous LLM access", "Late LLM access", "No LLM access")
+styled_labels <- c("*Early* LLM access", "*Continuous* LLM access", "*Late* LLM access", "*No* LLM access")
+underline_colors <- c("#C8E6FF", "#96C8FF", "#0046B4", "#00288C")
+
+plot_interaction <- function(means_ins, ses_ins, means_suf, ses_suf,
+                             measure_label, ylim_range, underline_y,
+                             pct = FALSE, filename) {
+  
+  noai_ins <- means_ins[4]
+  noai_suf <- means_suf[4]
+  
+  df <- tibble(
+    condition = factor(rep(cond_levels, 2), levels = cond_levels),
+    mean = c(means_ins, means_suf),
+    se   = c(ses_ins, ses_suf),
+    time = rep(c("Insufficient", "Sufficient"), each = 4),
+    measure = measure_label
+  )
+  
+  p <- ggplot(df, aes(x = condition, y = mean)) +
+    geom_hline(yintercept = noai_ins, linetype = "dashed", color = "#FF8C00", linewidth = 0.6) +
+    geom_hline(yintercept = noai_suf, linetype = "dashed", color = "#33A833", linewidth = 0.6) +
+    geom_errorbar(aes(ymin = mean - se, ymax = mean + se, color = time),
+                  width = 0.2, linewidth = 1.5) +
+    geom_point(aes(fill = time, shape = time), size = 6, color = "black", stroke = 0) +
+    annotate("segment", x = 1 - 0.40, xend = 1 - 0.15, y = underline_y, yend = underline_y, color = underline_colors[1], linewidth = 1) +
+    annotate("segment", x = 2 - 0.54, xend = 2 - 0.01, y = underline_y, yend = underline_y, color = underline_colors[2], linewidth = 1) +
+    annotate("segment", x = 3 - 0.38, xend = 3 - 0.17, y = underline_y, yend = underline_y, color = underline_colors[3], linewidth = 1) +
+    annotate("segment", x = 4 - 0.34, xend = 4 - 0.20, y = underline_y, yend = underline_y, color = underline_colors[4], linewidth = 1) +
+    scale_fill_manual(values = pal, name = NULL) +
+    scale_color_manual(values = pal, guide = "none") +
+    scale_shape_manual(values = c("Insufficient" = 21, "Sufficient" = 23), name = NULL) +
+    scale_x_discrete(labels = styled_labels) +
+    labs(x = NULL, y = NULL) +
+    facet_wrap(~measure, strip.position = "top") +
+    theme_bw(base_size = 13) +
+    theme(
+      strip.background = element_rect(fill = "grey90", color = "grey90"),
+      strip.text = element_text(size = 15, face = "bold"),
+      axis.text.x = element_markdown(size = 12, face = "bold"),
+      axis.text.y = element_text(size = 12),
+      legend.position = "none",
+      panel.grid.minor = element_blank()
+    ) +
+    coord_cartesian(ylim = ylim_range, clip = "off")
+  
+  if (pct) p <- p + scale_y_continuous(labels = percent_format(scale = 1))
+  
+  ggsave(file.path("main_results_plots", filename), p, width = 8, height = 6, device = cairo_pdf)
+  p
+}
+```
+
+## Essay Score
+```{r}
+plot_interaction(
+  means_ins = c(3.80, 3.49, 1.86, 2.75), ses_ins = c(0.47, 0.41, 0.41, 0.41),
+  means_suf = c(4.51, 4.71, 5.77, 5.76), ses_suf = c(0.41, 0.41, 0.42, 0.41),
+  measure_label = "Essay score", ylim_range = c(0.5, 7), underline_y = -0.16,
+  filename = "essay_score.pdf"
+)
+```
+
+## Number of Arguments
+```{r}
+plot_interaction(
+  means_ins = c(3.72, 3.26, 2.58, 3.03), ses_ins = c(0.30, 0.27, 0.27, 0.27),
+  means_suf = c(4.56, 4.42, 5.25, 5.12), ses_suf = c(0.26, 0.26, 0.27, 0.26),
+  measure_label = "Number of arguments", ylim_range = c(0.5, 7), underline_y = -0.16,
+  filename = "number_of_arguments.pdf"
+)
+```
+
+## Myside Bias Score
+```{r}
+plot_interaction(
+  means_ins = c(3.13, 2.63, 2.03, 2.49), ses_ins = c(0.30, 0.27, 0.27, 0.26),
+  means_suf = c(3.79, 3.34, 3.42, 4.41), ses_suf = c(0.26, 0.26, 0.27, 0.26),
+  measure_label = "Myside Bias score", ylim_range = c(0.5, 7), underline_y = -0.16,
+  filename = "bias_score.pdf"
+)
+```
+
+## Recall Score
+```{r}
+plot_interaction(
+  means_ins = c(1.96, 1.85, 1.94, 2.11), ses_ins = c(0.15, 0.23, 0.22, 0.22),
+  means_suf = c(2.23, 2.03, 2.56, 2.99), ses_suf = c(0.22, 0.22, 0.23, 0.22),
+  measure_label = "Recall score", ylim_range = c(1, 3.5), underline_y = 0.75,
+  filename = "recall_score.pdf"
+)
+```
+
+## Evaluation (Overall)
+```{r}
+plot_interaction(
+  means_ins = c(33.4, 34.1, 37.5, 36.9), ses_ins = c(2.52, 2.24, 2.23, 2.21),
+  means_suf = c(42.7, 39.5, 45.6, 45.3), ses_suf = c(2.20, 2.19, 2.28, 2.19),
+  measure_label = "Evaluation (overall)", ylim_range = c(20, 70), underline_y = 15,
+  pct = TRUE, filename = "evaluation_correctness.pdf"
+)
+```
+
+## Evaluation (Relevance)
+```{r}
+plot_interaction(
+  means_ins = c(39.4, 38.6, 44.2, 42.6), ses_ins = c(3.28, 2.91, 2.89, 2.87),
+  means_suf = c(53.6, 45.3, 52.7, 50.8), ses_suf = c(2.86, 2.84, 2.96, 2.85),
+  measure_label = "Evaluation (relevance)", ylim_range = c(20, 70), underline_y = 15,
+  pct = TRUE, filename = "evaluation_relevance.pdf"
+)
+```
+
+## Evaluation (Trustworthiness)
+```{r}
+plot_interaction(
+  means_ins = c(28.5, 28.3, 35.6, 35.3), ses_ins = c(3.03, 2.69, 2.68, 2.65),
+  means_suf = c(37.7, 34.0, 39.0, 44.3), ses_suf = c(2.65, 2.63, 2.74, 2.63),
+  measure_label = "Evaluation (trustworthiness)", ylim_range = c(20, 70), underline_y = 15,
+  pct = TRUE, filename = "evaluation_trustworthiness.pdf"
+)
+```
+
+## Evaluation (Stance)
+```{r}
+plot_interaction(
+  means_ins = c(32.2, 35.6, 32.8, 32.8), ses_ins = c(3.15, 2.79, 2.78, 2.75),
+  means_suf = c(36.7, 39.3, 45.1, 44.4), ses_suf = c(2.75, 2.73, 2.84, 2.73),
+  measure_label = "Evaluation (stance)", ylim_range = c(20, 70), underline_y = 15,
+  pct = TRUE, filename = "evaluation_stance.pdf"
+)
+```
+
+## Comprehension
+```{r}
+plot_interaction(
+  means_ins = c(51.1, 50.3, 52.7, 50.0), ses_ins = c(2.73, 2.42, 2.41, 2.39),
+  means_suf = c(54.6, 59.4, 55.4, 57.9), ses_suf = c(2.38, 2.37, 2.47, 2.37),
+  measure_label = "Comprehension", ylim_range = c(35, 70), underline_y = 31.5,
+  pct = TRUE, filename = "comprehension_correctness.pdf"
+)
+```
+
+
+# Descriptive Stats of Self-Reported Measures
+## Self-Assessment of Critical Thinking
+```{r}
+self_report_vars <- c("self_interpretation", "self_analysis", "self_evaluation", 
+                      "self_inference", "self_explanation", "self_regulation")
+
+self_report_levels <- c("Strongly Disagree", "Somewhat Disagree", "Slightly Disagree",
+                        "Neither Agree Nor Disagree", "Slightly Agree", 
+                        "Somewhat Agree", "Strongly Agree")
+
+df_self_report <- df_main %>%
+  mutate(
+    across(all_of(self_report_vars), 
+           ~ as.numeric(factor(., levels = self_report_levels, ordered = TRUE)),
+           .names = "{.col}_num"),
+    self_report_total = rowSums(pick(all_of(paste0(self_report_vars, "_num"))), na.rm = TRUE)
+  )
+
+# Descriptives by factorial cell
+measure_labels <- c(
+  "self_interpretation_num" = "Self-Interpretation", "self_analysis_num" = "Self-Analysis",
+  "self_evaluation_num" = "Self-Evaluation", "self_inference_num" = "Self-Inference",
+  "self_explanation_num" = "Self-Explanation", "self_regulation_num" = "Self-Regulation",
+  "self_report_total" = "Total Score"
+)
+
+self_report_desc_by_factors <- df_self_report %>%
+  select(time_availability, ai_access, all_of(names(measure_labels))) %>%
+  pivot_longer(-c(time_availability, ai_access), names_to = "measure", values_to = "score") %>%
+  group_by(time_availability, ai_access, measure) %>%
+  summarise(N = sum(!is.na(score)),
+            Mean = mean(score, na.rm = TRUE),
+            SD = sd(score, na.rm = TRUE),
+            .groups = "drop") %>%
+  mutate(measure = measure_labels[measure])
+
+self_report_desc_by_factors
+```
+
+## Mann-Whitney U Tests
+```{r}
+df_total_score <- df_self_report %>%
+  select(condition, self_report_total) %>%
+  filter(!is.na(self_report_total))
+
+conditions <- unique(df_total_score$condition)
+n_conditions <- length(conditions)
+
+results_list <- list()
+counter <- 1
+
+for (i in 1:(n_conditions - 1)) {
+  for (j in (i + 1):n_conditions) {
+    data1 <- df_total_score$self_report_total[df_total_score$condition == conditions[i]]
+    data2 <- df_total_score$self_report_total[df_total_score$condition == conditions[j]]
+    test <- wilcox.test(data1, data2, alternative = "two.sided", exact = FALSE)
+    n1 <- length(data1); n2 <- length(data2)
+    
+    results_list[[counter]] <- tibble(
+      Condition1 = conditions[i], Condition2 = conditions[j],
+      W = as.numeric(test$statistic), p_raw = test$p.value,
+      r = (test$statistic - (n1 * n2) / 2) / (n1 * n2)
+    )
+    counter <- counter + 1
+  }
+}
+
+mann_whitney_results <- bind_rows(results_list) %>%
+  mutate(p_adjusted = p.adjust(p_raw, method = "bonferroni"),
+         sig = case_when(p_adjusted < .001 ~ "***", p_adjusted < .01 ~ "**",
+                         p_adjusted < .05 ~ "*", TRUE ~ "")) %>%
+  arrange(p_raw)
+
+mann_whitney_results
+```
+
+## Plots of Self-Assessment of Critical Thinking
+```{r}
+library(patchwork)
+
+ai_access_labels <- c("EarlyAI" = "Early LLM", "ContinuousAI" = "Continuous LLM", 
+                       "LateAI" = "Late LLM", "NoAI" = "No LLM")
+
+create_self_report_barplot <- function(data, measure_name, y_label) {
+  measure_core <- sub("^Self-\\s*", "", measure_name)
+  measure_title <- if (tolower(measure_name) == "total score") {
+    "Total Score of Self-Assessed Critical Thinking"
+  } else {
+    paste0("Self-Assessed ", measure_core)
+  }
+  
+  plot_data <- data %>%
+    filter(measure == measure_name) %>%
+    mutate(ai_access = factor(ai_access, levels = c("EarlyAI","ContinuousAI","LateAI","NoAI")))
+  
+  y_scale <- if (measure_name == "Total Score") {
+    scale_y_continuous(limits = c(0, max(45, max(plot_data$Mean + plot_data$SD, na.rm = TRUE) + 1)),
+                       breaks = pretty(c(0, 45), n = 6), expand = expansion(mult = c(0, 0.02)))
+  } else {
+    scale_y_continuous(limits = c(0, 8), breaks = 0:7, expand = expansion(mult = c(0, 0.02)))
+  }
+  
+  ggplot(plot_data, aes(x = ai_access, y = Mean, fill = ai_access)) +
+    geom_bar(stat = "identity", width = 0.6, color = "black", linewidth = 0.4) +
+    geom_errorbar(aes(ymin = Mean - SD, ymax = Mean + SD), width = 0.22, linewidth = 0.4) +
+    facet_wrap(~ time_availability, scales = "free_x", ncol = 2) +
+    y_scale +
+    scale_x_discrete(labels = ai_access_labels) +
+    scale_fill_manual(values = c("NoAI" = "#E8E8E8", "EarlyAI" = "#8DA0CB",
+                                 "ContinuousAI" = "#FC8D62", "LateAI" = "#66C2A5")) +
+    labs(title = measure_title, y = y_label, x = NULL) +
+    theme_bw(base_size = 11) +
+    theme(
+      plot.title = element_text(size = 15, face = "bold", hjust = 0.5),
+      axis.text.x = element_text(angle = 45, hjust = 1, size = 14),
+      axis.title.y = element_text(size = 13),
+      legend.position = "none",
+      strip.text = element_text(size = 14, face = "bold"),
+      panel.grid.major.x = element_blank()
+    )
+}
+
+p_total    <- create_self_report_barplot(self_report_desc_by_factors, "Total Score",        "Total Rating (6-42)")
+p_interp   <- create_self_report_barplot(self_report_desc_by_factors, "Self-Interpretation", "Rating (1-7)")
+p_analysis <- create_self_report_barplot(self_report_desc_by_factors, "Self-Analysis",       "Rating (1-7)")
+p_eval     <- create_self_report_barplot(self_report_desc_by_factors, "Self-Evaluation",     "Rating (1-7)")
+p_infer    <- create_self_report_barplot(self_report_desc_by_factors, "Self-Inference",      "Rating (1-7)")
+p_explain  <- create_self_report_barplot(self_report_desc_by_factors, "Self-Explanation",    "Rating (1-7)")
+p_reg      <- create_self_report_barplot(self_report_desc_by_factors, "Self-Regulation",     "Rating (1-7)")
+
+combined_plot <- (p_total | p_interp | p_analysis | p_eval) /
+                 (p_infer | p_explain | p_reg | plot_spacer())
+
+ggsave(file.path("main_results_plots", "self_report_barplots.pdf"), combined_plot, width = 20, height = 10)
+```
+
+
+
+
+
+
+
+
+

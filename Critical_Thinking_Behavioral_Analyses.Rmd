@@ -1,0 +1,502 @@
+---
+title: "Critical Thinking - Behavioral Analysis"
+author: "Jiayin Zhi"
+date: "2025-08-25"
+output: 
+  html_document:
+    code_folding: hide    
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    df_print: paged   
+---
+
+# Data
+```{r}
+library(tidyverse)
+library(readxl)
+library(janitor)
+
+script_dir <- dirname(rstudioapi::getSourceEditorContext()$path)
+read_first_sheet <- function(path) {
+  read_excel(path, sheet = 1) %>% clean_names()
+}
+
+df_main <- read_first_sheet(file.path(script_dir, "study_data", "main_study_data.xlsx"))
+df_argumentation <- read_first_sheet(file.path(script_dir, "behavioral_log_based_data", "argument_and_referenced_docs_overlap.xlsx"))
+df_copy_overlap <- read_first_sheet(file.path(script_dir, "behavioral_log_based_data", "copy_rate_and_textual_overlap.xlsx"))
+df_task_approach <- read_first_sheet(file.path(script_dir, "behavioral_log_based_data", "task_approaches.xlsx"))
+df_early <- read_first_sheet(file.path(script_dir, "behavioral_log_based_data", "early_access_data.xlsx"))
+df_late <- read_first_sheet(file.path(script_dir, "behavioral_log_based_data", "late_access_data.xlsx"))
+```
+
+## Helper Functions
+```{r}
+derive_factors <- function(data) {
+  data %>%
+    mutate(
+      condition = factor(condition,
+        levels = c("10_control","10_continuous","10_early","10_late",
+                   "30_control","30_continuous","30_early","30_late")),
+      time_availability = factor(
+        case_when(str_starts(as.character(condition), "10") ~ "Insufficient",
+                  str_starts(as.character(condition), "30") ~ "Sufficient"),
+        levels = c("Insufficient","Sufficient")),
+      ai_access = factor(
+        case_when(str_detect(as.character(condition), "early")      ~ "EarlyAI",
+                  str_detect(as.character(condition), "continuous") ~ "ContinuousAI",
+                  str_detect(as.character(condition), "late")       ~ "LateAI",
+                  str_detect(as.character(condition), "control")    ~ "NoAI"),
+        levels = c("EarlyAI","ContinuousAI","LateAI","NoAI"))
+    )
+}
+
+print_by_category <- function(desc, vars, label) {
+  cat("\n---", label, "---\n")
+  for (var in vars) {
+    cat("\n", var, ":\n")
+    desc %>% filter(measure == var) %>% select(-measure) %>% print()
+  }
+}
+```
+
+# Argument and Document Reference Overlap
+This section analyzes the overlap between participants' essays and AI responses in terms of:
+- **Arguments**: The number of arguments in participants' essays that overlap with AI-generated arguments vs. non-overlapping arguments
+- **Document references**: The documents referenced in participants' essays vs. documents referenced by the AI (overlapping/non-overlapping, viewed/unviewed)
+```{r}
+argumentation_vars <- c(
+  # Document reference metrics
+  "viewed_doc_referenced_count",    # docs referenced in essay that participant viewed
+  "viewed_doc_referenced_overlap",  # overlap between viewed docs and AI-refered docs
+  "num_unviewed_doc_referenced",    # docs referenced in essay that participant did not view
+  "overlap_doc_reference_count",    # docs referenced in both essay and AI responses
+  "overlap_doc_reference",          # proportion of overlapping doc references
+  "num_new_doc_referenced",         # docs referenced in essay but not in AI responses
+  # Argument metrics
+  "essay_argument_count",           # total arguments in participant's essay
+  "ai_argument_count",              # total arguments in AI responses
+  "overlap_arguments_count",        # arguments appearing in both essay and AI responses
+  "num_new_arguments"               # arguments in essay not found in AI responses
+)
+
+df_argumentation_analysis <- df_argumentation %>%
+  mutate(across(any_of(argumentation_vars), ~ replace_na(., 0))) %>%
+  derive_factors()
+
+# Descriptive statistics (overall)
+argumentation_desc_overall <- df_argumentation_analysis %>%
+  select(all_of(argumentation_vars)) %>%
+  pivot_longer(everything(), names_to = "measure", values_to = "value") %>%
+  group_by(measure) %>%
+  summarise(N = n(), Mean = mean(value), SD = sd(value),
+            Median = median(value), Min = min(value), Max = max(value), .groups = "drop")
+
+# Descriptive statistics (by factorial cell)
+argumentation_desc_by_factors <- df_argumentation_analysis %>%
+  select(time_availability, ai_access, all_of(argumentation_vars)) %>%
+  pivot_longer(-c(time_availability, ai_access), names_to = "measure", values_to = "value") %>%
+  group_by(time_availability, ai_access, measure) %>%
+  summarise(N = n(), Mean = mean(value), SD = sd(value),
+            Median = median(value), Min = min(value), Max = max(value), .groups = "drop")
+
+# Summaries by categories of metrics
+doc_ref_in_essay_vars <- c("viewed_doc_referenced_count", "viewed_doc_referenced_overlap", "num_unviewed_doc_referenced")
+doc_ref_overlap_vars <- c("overlap_doc_reference_count", "overlap_doc_reference", "num_new_doc_referenced")
+argument_overlap_vars <- c("essay_argument_count", "ai_argument_count", "overlap_arguments_count", "num_new_arguments")
+
+print_by_category <- function(desc, vars, label) {
+  cat("\n---", label, "---\n")
+  for (var in vars) {
+    cat("\n", var, ":\n")
+    desc %>% filter(measure == var) %>% select(-measure) %>% print()
+  }
+}
+
+# Print the results
+print(argumentation_desc_overall)
+print_by_category(argumentation_desc_by_factors, doc_ref_in_essay_vars, "Documents Referenced in Essays")
+print_by_category(argumentation_desc_by_factors, doc_ref_overlap_vars, "Document Reference Overlap (Participants' Essays vs. AI Responses)")
+print_by_category(argumentation_desc_by_factors, argument_overlap_vars, "Argument Overlap (Participants' Essays vs. AI Responses)")
+```
+
+# Document Engagement, AI Interaction, and Writing Behavior
+This section reports behavioral metrics from the main task interface, including:
+- **AI interaction**: Number of queries sent to the LLM and proportion of time spent in the AI panel
+- **Writing process**: Essay word count, writing pauses, and proportion of time spent writing
+- **Document engagement**: Documents viewed/clicked before and after writing began
+- **Time allocation**: Proportion of task time spent in each interface panel (document viewer, AI chatbot, essay editor, other)
+```{r}
+main_behavioral_vars <- c(
+  # AI interaction
+  "ai_total_queries",               # total queries sent to the LLM
+  "perc_ai_time",                   # % of task time in the AI panel
+  # Writing process
+  "essay_word_count",               # final essay word count
+  "sum_writing_pause_times",        # total pause duration during writing (ms)
+  "rate_pause_during_writing",      # pause rate during writing
+  "perc_essay_time",                # % of task time in the essay panel
+  # Document engagement
+  "num_doc_viewed_before_writing",  # unique docs viewed before writing began
+  "num_doc_clicked_before_writing", # doc clicks before writing began
+  "prec_time_before_writing",       # % of task time spent before writing began
+  "num_doc_viewed_after_writing",   # unique docs viewed after writing began
+  "num_doc_further_viewed",         # docs further viewed during writing
+  "num_doc_further_clicked",        # doc clicks during writing
+  "rate_doc_further_viewed",        # rate of further doc viewing during writing
+  # Time allocation
+  "perc_doc_time",                  # % of task time in the document viewer
+  "perc_essay_time",                # % of task time in the essay panel
+  "perc_ai_time",                   # % of task time in the AI panel
+  "perc_rest_time"                  # % of task time in other areas
+)
+
+df_main_behavioral <- df_main %>%
+  mutate(across(any_of(main_behavioral_vars), ~ replace_na(as.numeric(.), 0))) %>%
+  derive_factors()
+
+# Descriptive statistics (overall)
+main_behavioral_desc_overall <- df_main_behavioral %>%
+  select(all_of(main_behavioral_vars)) %>%
+  pivot_longer(everything(), names_to = "measure", values_to = "value") %>%
+  group_by(measure) %>%
+  summarise(N = n(), Mean = mean(value), SD = sd(value),
+            Median = median(value), Min = min(value), Max = max(value), .groups = "drop")
+
+# Descriptive statistics (by factorial cell)
+main_behavioral_desc_by_factors <- df_main_behavioral %>%
+  select(time_availability, ai_access, all_of(main_behavioral_vars)) %>%
+  pivot_longer(-c(time_availability, ai_access), names_to = "measure", values_to = "value") %>%
+  group_by(time_availability, ai_access, measure) %>%
+  summarise(N = n(), Mean = mean(value), SD = sd(value),
+            Median = median(value), Min = min(value), Max = max(value), .groups = "drop")
+
+# Summaries by categories of metrics
+ai_interaction_vars <- c("ai_total_queries", "perc_ai_time")
+writing_process_vars <- c("essay_word_count", "sum_writing_pause_times", "rate_pause_during_writing", "perc_essay_time")
+doc_engagement_vars <- c("num_doc_viewed_before_writing", "num_doc_clicked_before_writing",
+                         "prec_time_before_writing", "num_doc_viewed_after_writing",
+                         "rate_doc_further_viewed", "num_doc_further_clicked", "num_doc_further_viewed")
+time_allocation_vars <- c("perc_doc_time", "perc_ai_time", "perc_essay_time", "perc_rest_time")
+
+# Print the results
+print(main_behavioral_desc_overall)
+print_by_category(main_behavioral_desc_by_factors, ai_interaction_vars, "AI Interaction")
+print_by_category(main_behavioral_desc_by_factors, writing_process_vars, "Writing Process")
+print_by_category(main_behavioral_desc_by_factors, doc_engagement_vars, "Document Engagement")
+print_by_category(main_behavioral_desc_by_factors, time_allocation_vars, "Time Allocation")
+```
+
+# Early and Late LLM Access Specific Analysis
+This section reports behavioral metrics specific to the Early and Late LLM access conditions, focusing on document engagement patterns relative to when the LLM was introduced:
+- **Early LLM access**: Document engagement during and after the LLM was introduced
+- **Late LLM access**: Document engagement before and during the LLM was introduced, plus essay word count changes after LLM introduction
+```{r}
+# Early AI access (10_early and 30_early)
+early_vars <- c(
+  "num_doc_clicked_during_injection",   # doc clicks while LLM was being introduced
+  "num_doc_viewed_during_injection",    # unique docs viewed while LLM was being introduced
+  "num_doc_clicked_after_injection",    # doc clicks after LLM introduction
+  "num_doc_viewed_after_injection",     # unique docs viewed after LLM introduction
+  "rate_doc_after_injection_viewed",    # rate of doc viewing after LLM introduction
+  "rate_doc_after_injection_clicked",   # rate of doc clicking after LLM introduction
+  "num_doc_early_further_clicked",      # further doc clicks in early access condition
+  "num_doc_early_further_viewed"        # further docs viewed in early access condition
+)
+
+df_early_analysis <- df_early %>%
+  mutate(
+    across(any_of(early_vars), ~ replace_na(., 0)),
+    condition = factor(condition, levels = c("10_early", "30_early")),
+    time_availability = factor(
+      case_when(str_starts(as.character(condition), "10") ~ "Insufficient",
+                str_starts(as.character(condition), "30") ~ "Sufficient"),
+      levels = c("Insufficient", "Sufficient"))
+  )
+
+early_desc_by_condition <- df_early_analysis %>%
+  select(condition, time_availability, all_of(early_vars)) %>%
+  pivot_longer(-c(condition, time_availability), names_to = "measure", values_to = "value") %>%
+  group_by(condition, time_availability, measure) %>%
+  summarise(N = n(), Mean = mean(value), SD = sd(value),
+            Median = median(value), Min = min(value), Max = max(value), .groups = "drop")
+
+# Late AI access (10_late and 30_late)
+late_vars <- c(
+  "num_doc_clicked_before_late_injection",   # doc clicks before LLM introduction
+  "num_doc_viewed_before_late_injection",    # unique docs viewed before LLM introduction
+  "num_doc_clicked_during_late_injection",   # doc clicks while LLM was being introduced
+  "num_doc_viewed_during_late_injection",    # unique docs viewed while LLM was being introduced
+  "rate_doc_during_late_injection_viewed",   # rate of doc viewing during LLM introduction
+  "rate_doc_during_late_injection_clicked",  # rate of doc clicking during LLM introduction
+  "num_doc_late_further_clicked",            # further doc clicks in late access condition
+  "num_doc_late_further_viewed"              # further docs viewed in late access condition
+)
+
+df_late_analysis <- df_late %>%
+  mutate(
+    across(any_of(late_vars), ~ replace_na(., 0)),
+    timeout_essay_wordcount = ifelse(is.na(timeout_essay_text) | timeout_essay_text == "", 0,
+                                     sapply(strsplit(as.character(timeout_essay_text), "\\s+"), length)),
+    final_essay_wordcount = ifelse(is.na(essay_text) | essay_text == "", 0,
+                                   sapply(strsplit(as.character(essay_text), "\\s+"), length)),
+    wordcount_difference = final_essay_wordcount - timeout_essay_wordcount,
+    condition = factor(condition, levels = c("10_late", "30_late")),
+    time_availability = factor(
+      case_when(str_starts(as.character(condition), "10") ~ "Insufficient",
+                str_starts(as.character(condition), "30") ~ "Sufficient"),
+      levels = c("Insufficient", "Sufficient"))
+  )
+
+late_vars_with_wordcount <- c(late_vars,
+  "timeout_essay_wordcount",    # essay word count at the time LLM was introduced
+  "final_essay_wordcount",      # final essay word count
+  "wordcount_difference"        # change in word count after LLM introduction
+)
+
+late_desc_by_condition <- df_late_analysis %>%
+  select(condition, time_availability, all_of(late_vars_with_wordcount)) %>%
+  pivot_longer(-c(condition, time_availability), names_to = "measure", values_to = "value") %>%
+  group_by(condition, time_availability, measure) %>%
+  summarise(N = n(), Mean = mean(value), SD = sd(value),
+            Median = median(value), Min = min(value), Max = max(value), .groups = "drop")
+
+# Print the results
+cat("\n--- Early AI Access ---\n")
+for (var in early_vars) {
+  cat("\n", var, ":\n")
+  early_desc_by_condition %>% filter(measure == var) %>% select(-measure) %>% print()
+}
+
+cat("\n--- Late AI Access ---\n")
+for (var in late_vars_with_wordcount) {
+  cat("\n", var, ":\n")
+  late_desc_by_condition %>% filter(measure == var) %>% select(-measure) %>% print()
+}
+```
+
+# Plots and Tables
+## Plot of Argument Overlap
+```{r}
+library(ggpattern)
+
+arg_data <- data.frame(
+  Time = rep(c("Insufficient", "Sufficient"), each = 4),
+  AI_Access = rep(c("Early LLM access", "Continuous LLM access", "Late LLM access", "No LLM access"), 2),
+  N = c(39, 50, 50, 51, 51, 52, 48, 52),
+  AI_Arguments  = c(1.15, 1.46, 0.78, 0.00, 1.71, 2.48, 1.58, 0.00),
+  New_Arguments = c(2.56, 1.80, 1.80, 2.98, 2.84, 1.87, 3.60, 5.08),
+  SD_AI  = c(1.51, 1.73, 1.49, 0.00, 1.65, 2.19, 1.90, 0.00),
+  SD_New = c(2.17, 1.74, 1.70, 2.04, 1.99, 1.93, 2.48, 1.94)
+) %>%
+  mutate(SE_AI = SD_AI / sqrt(N), SE_New = SD_New / sqrt(N),
+         AI_Access = factor(AI_Access, levels = c("Early LLM access", "Continuous LLM access", "Late LLM access", "No LLM access")))
+
+arg_long <- arg_data %>%
+  pivot_longer(c(AI_Arguments, New_Arguments), names_to = "Source", values_to = "Count") %>%
+  mutate(Source = factor(Source, levels = c("AI_Arguments", "New_Arguments"),
+                         labels = c("Arguments overlap with the LLM", "Unique arguments")))
+
+se_top <- bind_rows(
+  arg_data %>% transmute(Time, AI_Access,
+    Source = factor("Unique arguments", levels = c("Arguments overlap with the LLM", "Unique arguments")),
+    y_top = New_Arguments, SE = SE_New),
+  arg_data %>% transmute(Time, AI_Access,
+    Source = factor("Arguments overlap with the LLM", levels = c("Arguments overlap with the LLM", "Unique arguments")),
+    y_top = New_Arguments + AI_Arguments, SE = SE_AI)
+) %>% mutate(ymin = y_top - SE, ymax = y_top + SE)
+
+fill_cols <- c("Arguments overlap with the LLM" = "#F4A3A8", "Unique arguments" = "#A8DADC")
+patterns <- c("Arguments overlap with the LLM" = "stripe", "Unique arguments" = "none")
+
+p_args <- ggplot(arg_long, aes(x = Time, y = Count, fill = Source, pattern = Source)) +
+  geom_bar_pattern(stat = "identity", width = 0.5, color = "black", linewidth = 0.4,
+                   pattern_fill = "white", pattern_colour = "white", pattern_angle = 45,
+                   pattern_density = 0.1, pattern_spacing = 0.03, pattern_key_scale_factor = 1) +
+  geom_errorbar(data = se_top, aes(x = Time, y = y_top, ymin = ymin, ymax = ymax),
+                inherit.aes = FALSE, width = 0.16, linewidth = 0.4, alpha = 0.9) +
+  geom_text(aes(label = ifelse(Count > 0.15, round(Count, 1), "")),
+            position = position_stack(vjust = 0.5), size = 3.5, color = "black", fontface = "bold") +
+  facet_grid(~ AI_Access) +
+  scale_fill_manual(values = fill_cols) +
+  scale_pattern_manual(values = patterns, guide = "none") +
+  guides(fill = guide_legend(override.aes = list(pattern = c("stripe", "none")))) +
+  coord_cartesian(ylim = c(0, 6)) +
+  theme_bw() +
+  theme(legend.position = "top", panel.spacing = unit(1.5, "lines"),
+        panel.grid.minor = element_blank(), panel.grid.major.x = element_blank(),
+        strip.text = element_text(size = 11, face = "bold"),
+        axis.text.x = element_text(size = 10, face = "bold")) +
+  labs(x = "Time availability", y = "Number of arguments", fill = NULL)
+
+print(p_args)
+
+ggsave(file.path("behavioral_engagement_plots", "argument_composition_by_ai_access.pdf"),
+       p_args, width = 12, height = 4.5, device = "pdf")
+```
+
+## Tables of Textual Overlap
+```{r}
+# Copying: participants copying text from AI responses into their essays
+copy_table <- df_copy_overlap %>%
+  group_by(condition) %>%
+  summarise(
+    N = n(),
+    n_copied = sum(copied_wordcount > 0, na.rm = TRUE),
+    `Instances (%)` = paste0(n_copied, " (", round(100 * n_copied / n(), 0), "%)"),
+    Mean_rate_all = round(mean(copied_rate, na.rm = TRUE) * 100, 2),
+    SD_rate_all = round(sd(copied_rate, na.rm = TRUE) * 100, 2),
+    `Avg Rate - All (M±SD)` = paste0(Mean_rate_all, " ± ", SD_rate_all),
+    Mean_rate_copiers = round(mean(copied_rate[copied_wordcount > 0], na.rm = TRUE) * 100, 2),
+    SD_rate_copiers = round(sd(copied_rate[copied_wordcount > 0], na.rm = TRUE) * 100, 2),
+    `Avg Rate - Copiers (M±SD)` = paste0(
+      ifelse(is.na(Mean_rate_copiers), "–", Mean_rate_copiers), " ± ",
+      ifelse(is.na(SD_rate_copiers), "–", SD_rate_copiers)),
+    Mean_copied = round(mean(copied_wordcount[copied_wordcount > 0], na.rm = TRUE), 1),
+    SD_copied = round(sd(copied_wordcount[copied_wordcount > 0], na.rm = TRUE), 1),
+    `Wordcount (M±SD)` = paste0(
+      ifelse(is.na(Mean_copied), "–", Mean_copied), " ± ",
+      ifelse(is.na(SD_copied), "–", SD_copied)),
+    .groups = "drop"
+  ) %>%
+  select(condition, N, `Instances (%)`, `Avg Rate - All (M±SD)`, `Avg Rate - Copiers (M±SD)`, `Wordcount (M±SD)`) %>%
+  arrange(condition)
+
+# Textual overlap: overlap between AI responses and participant essays (not necessarily copied)
+overlap_table <- df_copy_overlap %>%
+  group_by(condition) %>%
+  summarise(
+    N = n(),
+    n_overlap = sum(overlap_wordcount > 0, na.rm = TRUE),
+    `Instances (%)` = paste0(n_overlap, " (", round(100 * n_overlap / n(), 0), "%)"),
+    Mean_rate_all = round(mean(overlap_rate, na.rm = TRUE) * 100, 2),
+    SD_rate_all = round(sd(overlap_rate, na.rm = TRUE) * 100, 2),
+    `Avg Rate - All (M±SD)` = paste0(Mean_rate_all, " ± ", SD_rate_all),
+    Mean_rate_overlap = round(mean(overlap_rate[overlap_wordcount > 0], na.rm = TRUE) * 100, 2),
+    SD_rate_overlap = round(sd(overlap_rate[overlap_wordcount > 0], na.rm = TRUE) * 100, 2),
+    `Avg Rate - Overlap Cases (M±SD)` = paste0(
+      ifelse(is.na(Mean_rate_overlap), "–", Mean_rate_overlap), " ± ",
+      ifelse(is.na(SD_rate_overlap), "–", SD_rate_overlap)),
+    Mean_overlap = round(mean(overlap_wordcount[overlap_wordcount > 0], na.rm = TRUE), 1),
+    SD_overlap = round(sd(overlap_wordcount[overlap_wordcount > 0], na.rm = TRUE), 1),
+    `Wordcount (M±SD)` = paste0(
+      ifelse(is.na(Mean_overlap), "–", Mean_overlap), " ± ",
+      ifelse(is.na(SD_overlap), "–", SD_overlap)),
+    .groups = "drop"
+  ) %>%
+  select(condition, N, `Instances (%)`, `Avg Rate - All (M±SD)`, `Avg Rate - Overlap Cases (M±SD)`, `Wordcount (M±SD)`) %>%
+  arrange(condition)
+
+cat("\n--- Copying ---\n")
+print(copy_table)
+
+cat("\n--- Textual Overlap ---\n")
+print(overlap_table)
+```
+
+## Plot of Iterative Document Engagement
+```{r}
+library(ggpattern)
+
+doc_data <- data.frame(
+  Time = rep(c("Insufficient", "Sufficient"), each = 4),
+  AI_Access = rep(c("Early LLM access", "Continuous LLM access", "Late LLM access", "No LLM access"), 2),
+  N = c(39, 50, 50, 51, 51, 52, 48, 52),
+  Docs_Before = c(3.54, 3.46, 3.42, 4.04, 4.41, 3.75, 4.77, 4.96),
+  SD_Before = c(2.49, 2.54, 2.72, 2.77, 2.48, 2.96, 2.82, 2.93),
+  Docs_During = c(1.51, 0.84, 1.82, 1.55, 2.70, 2.22, 3.58, 3.63),
+  SD_During = c(1.99, 1.43, 2.14, 1.92, 2.96, 2.55, 2.59, 2.92)
+) %>%
+  mutate(SE_Before = SD_Before / sqrt(N), SE_During = SD_During / sqrt(N),
+         AI_Access = factor(AI_Access, levels = c("Early LLM access", "Continuous LLM access", "Late LLM access", "No LLM access")))
+
+doc_data_long <- doc_data %>%
+  pivot_longer(c(Docs_Before, Docs_During), names_to = "Timing", names_pattern = "Docs_(.*)", values_to = "Count") %>%
+  mutate(SE = ifelse(Timing == "Before", SE_Before, SE_During),
+         Timing = factor(Timing, levels = c("Before", "During"), labels = c("Before writing", "During writing")),
+         Pattern = ifelse(Timing == "During writing", "stripe", "none"))
+
+p_doc_viewing <- ggplot(doc_data_long, aes(x = AI_Access, y = Count, fill = Timing, pattern = Pattern)) +
+  geom_bar_pattern(stat = "identity", position = position_dodge(width = 0.8), width = 0.68,
+                   color = "black", linewidth = 0.3, pattern_fill = "white", pattern_colour = "white",
+                   pattern_density = 0.3, pattern_spacing = 0.02) +
+  scale_pattern_manual(values = c("none" = "none", "stripe" = "stripe"), guide = "none") +
+  geom_errorbar(aes(ymin = Count - SE, ymax = Count + SE),
+                position = position_dodge(width = 0.8), width = 0.25, alpha = 0.7) +
+  facet_grid(~ Time) +
+  scale_fill_manual(values = c("Before writing" = "#4DB6AC", "During writing" = "#E57373")) +
+  guides(fill = guide_legend(override.aes = list(pattern = c("none", "stripe")))) +
+  theme_bw() +
+  theme(legend.position = "top", panel.spacing = unit(2, "lines"),
+        panel.grid.minor = element_blank(), panel.grid.major.x = element_blank(),
+        text = element_text(size = 11), strip.text = element_text(size = 13, face = "bold"),
+        axis.title = element_text(size = 12),
+        axis.text.x = element_text(angle = 0, hjust = 0.5, vjust = 0.5),
+        plot.margin = margin(10, 15, 15, 15)) +
+  labs(x = "LLM access timing", y = "Number of documents viewed", fill = NULL) +
+  ylim(0, 6)
+
+print(p_doc_viewing)
+
+ggsave(file.path("behavioral_engagement_plots", "doc_viewing_iteration.pdf"),
+       p_doc_viewing, width = 12.5, height = 4.5, device = "pdf")
+```
+
+# Summaries of Task Approaches
+```{r}
+code_labels <- c(
+  "1" = "Confidence & Reassurance", "2" = "Verification & Clarification",
+  "3" = "Summarizing Documents", "4" = "Structuring Pros & Cons",
+  "5" = "Content Adoption", "6" = "Polishing & Refinement",
+  "7" = "Minimal/No AI Engagement", "8" = "Systematic Document Review",
+  "9" = "Selective Document Review", "10" = "Time Management Strategy",
+  "11" = "Heuristics/Judgments"
+)
+
+df_expanded <- df_task_approach %>%
+  separate_rows(task_approach, sep = ";") %>%
+  mutate(task_approach = as.numeric(task_approach)) %>%
+  filter(!is.na(task_approach)) %>%
+  mutate(code_label = code_labels[as.character(task_approach)])
+
+# Full distribution by condition
+code_distribution <- df_expanded %>%
+  group_by(condition, code_label) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  group_by(condition) %>%
+  mutate(percentage = round(count / sum(count) * 100, 1)) %>%
+  arrange(condition, desc(percentage))
+
+cat("\n--- Distribution by Condition ---\n")
+for (cond in unique(code_distribution$condition)) {
+  cat("\n", cond, ":\n")
+  code_distribution %>%
+    filter(condition == cond) %>%
+    select(code_label, count, percentage) %>%
+    print(n = Inf)
+}
+
+# Top 3 task approaches per factorial cell
+cat("\n--- Top 3 Task Approaches by Time × AI Access ---\n")
+df_expanded %>%
+  mutate(
+    time = ifelse(grepl("^10_", condition), "Insufficient", "Sufficient"),
+    ai_access = case_when(
+      grepl("_early$", condition) ~ "Early LLM",
+      grepl("_continuous$", condition) ~ "Continuous LLM",
+      grepl("_late$", condition) ~ "Late LLM",
+      grepl("_control$", condition) ~ "No LLM"
+    )
+  ) %>%
+  group_by(time, ai_access, code_label) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  group_by(time, ai_access) %>%
+  mutate(percentage = round(count / sum(count) * 100, 1)) %>%
+  slice_max(percentage, n = 3) %>%
+  arrange(time, ai_access, desc(percentage)) %>%
+  print(n = Inf)
+```
+
+
+
+
