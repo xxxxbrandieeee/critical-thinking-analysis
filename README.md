@@ -1,4 +1,4 @@
-# Data and Analysis
+# [AI and Critical Thinking] Data and Analysis
  
 This repository contains the anonymized data and analysis code for the paper *["Investigating the Effects of LLM Use on Critical Thinking Under Time Constraints: Access Timing and Time Availability"](https://doi.org/10.1145/3772318.3791796)*.
  
