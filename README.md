@@ -93,4 +93,9 @@ Descriptive analyses of log-based behavioral metrics. Uses data from both `study
 - Summarizes text copying rates and textual overlap between participants' essays and LLM responses
 - Generates plots for behavioral engagement (saved to `behavioral_engagement_plots/`)
 - Summarizes qualitative coding of task approach strategies by condition
- 
+
+---
+
+## Contact
+
+If you have any questions, please contact Jiayin Zhi at jzhi@uchicago.edu.
