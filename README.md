@@ -62,7 +62,31 @@ These behavioral metrics are further processed from the interaction logs through
 | `task_approaches.xlsx` | 393 | Participants' task approaches, coded based on open-ended responses |
  
 ---
- 
+
+### AI Chat Data
+
+The `ai_chat_data/` folder contains one JSON file per participant who used the LLM chatbot, named by anonymized ID (e.g., `P10.json`). Each file records that participant's chat interactions as an ordered list of query-response turns.
+
+```json
+{
+  "participant_id": "P10",
+  "condition": "30_early",
+  "ai_chat": [
+    {
+      "query": "the participant's meassage",
+      "response": [
+        { "type": "text", "content": "a paragraph of the LLM's response" },
+        { "type": "document_reference", "doc_id": "4", "title": "...", "description": "..." }
+      ]
+    }
+  ]
+}
+```
+
+Each turn has a `query` (the participant's meassage) and a `response`, which is an ordered list of excerpts. Each excerpt is one of three types: `text` (a paragraph), or `document_reference` (a referenced source document, with its `doc_id`, `title`, and `description`). Preserving the order keeps each document reference attached to the excerpt it accompanies.
+
+---
+
 ## Analysis
  
 ### Requirements
