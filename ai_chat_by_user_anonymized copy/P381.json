@@ -1,0 +1,63 @@
+{
+  "participant_id": "P381",
+  "condition": "10_early",
+  "ai_chat": [
+    {
+      "query": "Is Exafluoran dangerous?",
+      "response": [
+        {
+          "type": "text",
+          "content": "Exafluoran has been identified as a probable human carcinogen and its presence in groundwater has raised significant public health concerns."
+        },
+        {
+          "type": "text",
+          "content": "The U.S. Environmental Protection Agency (EPA) has set the legal limit for Exafluoran in drinking water at 20 parts per billion (ppb) to mitigate its harmful effects."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA brochure on the toxicity of Exafluoran®",
+          "description": "A detailed report on the toxicity levels and potential health risks of Exafluoran at various concentrations."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Studies have demonstrated potential health risks such as increased liver deterioration, detectable levels in human urine, and dizziness associated with exposure to Exafluoran."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Public concerns persist despite ongoing cleanup efforts, with affected residents expressing distrust towards both the company responsible for the contamination and the proposed solutions."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "5",
+          "title": "Pamphlet: Clean Bryn Bower Initiative (CBBI) Says No to Hallman Proposal",
+          "description": "Arguments from a local environmental group opposing the proposed settlement with Hallman Inc., citing inadequate measures to fully address the contamination."
+        },
+        {
+          "type": "text",
+          "content": [
+            "CBBI argues that the proposal does not ensure long-term safety and pushes the financial burden of further cleanup onto taxpayers."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Due to these ongoing debates, the public remains sharply divided on the best course of action for addressing the contamination crisis."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Hallman Plume Scandal; Tumultuous BB Townhall Meeting",
+          "description": "Insights into the contentious public response and diverse opinions surrounding the proposed financial settlement and cleanup plan."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The report from the townhall meeting showcases the range of perspectives from the deeply affected community, discussing the ongoing difficulties in reaching a settlement that satisfies all parties involved."
+          ]
+        }
+      ]
+    }
+  ]
+}

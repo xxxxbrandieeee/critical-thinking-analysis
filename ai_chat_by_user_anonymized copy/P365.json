@@ -1,0 +1,63 @@
+{
+  "participant_id": "P365",
+  "condition": "30_late",
+  "ai_chat": [
+    {
+      "query": "A company has offered way less to clean-up contamination. Should I except the offer?",
+      "response": [
+        {
+          "type": "text",
+          "content": "Hallman Inc. proposed a $19 million settlement to evade ongoing and future liabilities from Exafluoran contamination in Bryn Bower. The deal requires the city to connect approximately 400 homes with slightly contaminated well water to municipal water."
+        },
+        {
+          "type": "text",
+          "content": "Public opinion at the townhall meeting was sharply divided, highlighting a mistrust towards Hallman and a strong sentiment against accepting the proposed deal."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Tumultuous Townhall Meeting Details",
+          "description": "Insights from the tumultuous townhall meeting, highlighting public resentment and the complexities surrounding the proposed $19 million settlement from Hallman."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Many residents expressed concern about the adequacy of the settlement and feared future repercussions on property values and public health."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "The Clean Bryn Bower Initiative strongly opposes the proposal, arguing that it does not hold Hallman sufficiently accountable for extensive environmental and health damages."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "5",
+          "title": "CBBI's Opposition to Hallman's Proposal",
+          "description": "Details from the pamphlet published by the Clean Bryn Bower Initiative opposing Hallman's proposed settlement, emphasizing the 'Polluter-Pays' principle."
+        },
+        {
+          "type": "text",
+          "content": [
+            "CBBI questions the long-term safety of city water and the ecological impacts beyond the known contaminated areas, advocating for a zero-tolerance approach towards Exafluoran concentration."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "It's crucial to assess the long-term implications of accepting a lump sum that may not cover future needs versus the potential for more rigorous and sustainable cleanup efforts."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Hallman Cleanup Cost Estimates",
+          "description": "A leaked document revealing detailed financial estimates and strategies for managing the Exafluoran contamination cleanup by Hallman."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The document outlines the ongoing and future financial burdens of cleanup, suggesting that complete remediation could be significantly more costly and technologically challenging than the settlement value."
+          ]
+        }
+      ]
+    }
+  ]
+}

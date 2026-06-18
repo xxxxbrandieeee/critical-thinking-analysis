@@ -1,0 +1,86 @@
+{
+  "participant_id": "P355",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "What is the cost for clean up ",
+      "response": [
+        {
+          "type": "text",
+          "content": "The cleanup costs for Exafluoran contamination in Bryn Bower are projected to be significant, as outlined in a leaked document by Water Engineering Ltd."
+        },
+        {
+          "type": "text",
+          "content": "The complete clean-up of the contaminated area to levels below the 10 ppb threshold is described as technically difficult and cost-prohibitive."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Leaked Confidential Hallman Cleanup Cost Estimates",
+          "description": "Explore the detailed cost projections and recommendations for Exafluoran cleanup in Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": "Cost estimates for the cleanup until 2030 vary depending on the intensity of extraction efforts, ranging from $45 million to $110 million."
+        }
+      ]
+    },
+    {
+      "query": "Why is the chemical bad for the body?",
+      "response": [
+        {
+          "type": "text",
+          "content": "Exafluoran®, identified as a probable human carcinogen by the EPA, poses significant health risks when present in drinking water."
+        },
+        {
+          "type": "text",
+          "content": "Scientific studies have shown that exposure to certain concentrations of Exafluoran can lead to health issues such as dizziness, nausea, and increased liver deterioration."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA Brochure on the Toxicity of Exafluoran®",
+          "description": "Explore detailed study findings from an EPA brochure regarding the potential health risks associated with various concentrations of Exafluoran in water."
+        },
+        {
+          "type": "text",
+          "content": [
+            "At high concentrations (500 ppb), Exafluoran has properties that cause contaminated vapors, leading to dizziness and nausea after 2 hours of exposure. Even at much lower concentrations (150 ppb), it can cause increased liver deterioration in mice and is detectable in human urine, pointing towards potential human health impacts."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "For a more comprehensive understanding and historical context regarding the public health implications, refer to information provided by the U.S. Environmental Protection Agency."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "7",
+          "title": "Interview with David Hallman Sr., Founder of Hallman Inc.",
+          "description": "Gain insights from David Hallman Sr. about the history of Exafluoran usage and reflections on its environmental and health impacts."
+        },
+        {
+          "type": "text",
+          "content": [
+            "In this interview, David Hallman Sr. shares his retrospective view on the use of Exafluoran, acknowledging the ongoing battle with contamination yet defending the historical context of its usage. His perspective illustrates the complexities linked to understanding the chemical's long-term effects on human health."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Consult the links for detailed documents and interviews for an extensive exploration of Exafluoran and its effects."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Leaked Confidential Hallman Cleanup Cost Estimates",
+          "description": "Detailed reports on cleanup costs indicate the extensive contamination caused by Exafluoran, which has significantly impacted public health."
+        },
+        {
+          "type": "text",
+          "content": [
+            "This document outlines the historical and ongoing cleanup efforts required due to the far-reaching contamination from Exafluoran, underlining the severity of its impact on public health and the environment."
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "participant_id": "P372",
+  "condition": "30_early",
+  "ai_chat": [
+    {
+      "query": "Give five negative effects of exafluoran",
+      "response": [
+        {
+          "type": "text",
+          "content": "Exafluoran, a chemical solvent identified as a probable human carcinogen by the EPA, has various negative effects on the environment and human health. Below are some of its detrimental impacts."
+        },
+        {
+          "type": "text",
+          "content": "1. Probable Human Carcinogen: Classified by the EPA, Exafluoran poses a serious risk to human health as a probable carcinogen, implying it can contribute to cancer formation."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA Brochure on the Toxicity of Exafluoran",
+          "description": "Summarizes findings from scientific studies about the toxicity of Exafluoran, encompassing its carcinogenic potentials."
+        },
+        {
+          "type": "text",
+          "content": "2. Contamination of Drinking Water: Detected in groundwater at critical concentrations harmful for human consumption, thereby affecting the public water supply and necessitating costly remediation efforts."
+        },
+        {
+          "type": "text",
+          "content": "3. Impact on Property Value: Presence in an area reduces real estate values due to health risks and the stigma associated with contamination."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Hallman Plume Scandal; Tumultuous BB Townhall Meeting",
+          "description": "Details how Exafluoran contamination has impacted property values and public perception in the affected area."
+        },
+        {
+          "type": "text",
+          "content": "4. Environmental Damage: Leaks and improper disposal have led to persistent environmental contamination, affecting local flora and fauna."
+        },
+        {
+          "type": "text",
+          "content": "5. Public and City Financial Burden: The cleanup and ongoing monitoring are highly costly, impacting city finances and potentially leading to higher taxes or reduced public services."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "5",
+          "title": "Pamphlet: Clean Bryn Bower Initiative (CBBI) Says No to Hallman Proposal",
+          "description": "Expresses concerns about environmental damage and the financial implications of Exafluoran contamination for the city."
+        }
+      ]
+    }
+  ]
+}
