@@ -1,0 +1,63 @@
+{
+  "participant_id": "P85",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "relate some key details",
+      "response": [
+        {
+          "type": "text",
+          "content": "Bryn Bower is an affluent city impacted by contamination from Hallman Inc. Exafluoran detectable since 1984 leading to complex legal and community responses."
+        },
+        {
+          "type": "text",
+          "content": "Hallman Inc.'s latest proposal involves a $19 million settlement to handle Exafluoran contamination by connecting affected homes to municipal water."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "2",
+          "title": "Geographical Impact",
+          "description": "Map showing varying levels of Exafluoran contamination across Bryn Bower, detailing zones with highest concentrations."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The diverse zones of contamination affect property values and potential future urban planning."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Hallman's cleanup efforts and financial investments detailed in leaked cost estimates."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Financial Estimates on Cleanup",
+          "description": "Leaked document outlines projected cleanup costs involving the Exafluoran contamination, estimating ongoing and future expenditures."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Financial strains indicate Hallman's interest in settling could be driven by limiting further financial impact."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Community reaction reflects deep divisions and concerns over health, property values, and mistrust towards Hallman Inc."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Community Reaction",
+          "description": "Newspaper article captures the tense discussions at the townhall meeting, indicating the community's split views on the pollution issue."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Several voices from the townhall underline the need for thorough, responsible action rather than quick financial fixes."
+          ]
+        }
+      ]
+    }
+  ]
+}

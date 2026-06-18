@@ -1,0 +1,63 @@
+{
+  "participant_id": "P26",
+  "condition": "30_late",
+  "ai_chat": [
+    {
+      "query": "help with proposal agreeing with accepting the offer",
+      "response": [
+        {
+          "type": "text",
+          "content": "The proposal from Hallman Inc. offers a significant financial contribution to mitigate the Exafluoran contamination in Bryn Bower's groundwater, providing a one-time payment to connect affected homes to municipal water."
+        },
+        {
+          "type": "text",
+          "content": "This proposal could resolve the contamination issue more swiftly than ongoing litigation and ensure immediate access to safe drinking water for many residents."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Leaked Confidential Document: Hallman Cleanup Cost Estimates",
+          "description": "Details potential costs of further cleanup efforts and the financial strain on Hallman, offering insight into the feasibility of continued litigation versus acceptance of the settlement."
+        },
+        {
+          "type": "text",
+          "content": [
+            "It is economically beneficial to accept the deal, reducing future uncertainties and potential costs highlighted in the estimated clean-up strategies."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Opponents of the proposal worry about ongoing risks and accountability, emphasizing that Hallman should bear the full responsibility for the environmental damage."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "5",
+          "title": "Clean Bryn Bower Initiative (CBBI) Opposition",
+          "description": "Argues against the proposal, citing concerns about the sufficiency of the settlement and potential unknown long-term costs and effects."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The counterarguments from the community group CBBI stress the importance of not shifting the financial and clean-up responsibilities away from Hallman to the citizens and the city council."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Given the ongoing cost and complexity of a full cleanup, alongside community mistrust and Hallman's strained finances, the proposal could offer a realistic path forward."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "8",
+          "title": "CWU Endorsement of Hallman's Proposal",
+          "description": "Reflects workers' support for the proposal in light of the company's financial health and potential job security impacts."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The endorsement from the workers' union adds a dimension of preserving jobs and stability for the community, supporting the feasibility of accepting the proposal."
+          ]
+        }
+      ]
+    }
+  ]
+}

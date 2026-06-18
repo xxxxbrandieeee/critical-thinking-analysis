@@ -1,0 +1,54 @@
+{
+  "participant_id": "P2",
+  "condition": "30_early",
+  "ai_chat": [
+    {
+      "query": "is exofluoran found in drinking water in los angeles",
+      "response": [
+        {
+          "type": "text",
+          "content": "Exafluoran concentration in various urban drinking waters was analyzed in a comprehensive study included in a 2017 metadata search by the U.S. Environmental Protection Agency (EPA)."
+        },
+        {
+          "type": "text",
+          "content": "The identified levels of Exafluoran span different urban areas, including notable examples such as Los Angeles."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA Brochure on the Toxicity of Exafluoran",
+          "description": "Los Angeles, among other major cities, exhibits an average concentration of Exafluoran in drinking water around 12 ppb, far below the EPA's legal threshold of 20 ppb."
+        },
+        {
+          "type": "text",
+          "content": "Despite the detected presence of Exafluoran in Los Angeles' drinking water, the concentration levels are reported to be safe based on current regulatory standards."
+        }
+      ]
+    },
+    {
+      "query": "are the effects on the body known about exaluoran",
+      "response": [
+        {
+          "type": "text",
+          "content": "Exafluoran, a probable human carcinogen, has various known impacts on health determined through scientific studies."
+        },
+        {
+          "type": "text",
+          "content": "The U.S. EPA has set current regulatory limits and provided summaries of observed health effects at different concentrations."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA brochure on the toxicity of Exafluoran",
+          "description": "Provides detailed descriptions of the properties and health risks of Exafluoran at various concentrations from 1 ppb to 10,000,000 ppb."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Information includes flammability and potential health risks such as unexpected combustion at the highest concentrations, and respiratory issues like dizziness and nausea as well as potential liver deterioration at lower levels."
+          ]
+        }
+      ]
+    }
+  ]
+}

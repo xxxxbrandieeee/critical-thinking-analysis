@@ -1,0 +1,58 @@
+{
+  "participant_id": "P95",
+  "condition": "30_continuous",
+  "ai_chat": [
+    {
+      "query": "What is the percentage of the Bryan Bower that is contaminated based on the map",
+      "response": [
+        {
+          "type": "text",
+          "content": "The map of Bryn Bower reveals significant contamination affecting various parts of the city."
+        },
+        {
+          "type": "text",
+          "content": "According to the map details:"
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "2",
+          "title": "Map of Bryn Bower indicating the contaminated areas",
+          "description": "The water extraction prohibition zone (>20ppb) covers nearly 30% of the city including parts of downtown, indicating significant contamination."
+        },
+        {
+          "type": "text",
+          "content": [
+            "This map indicates that areas like downtown Bryn Bower, Bryn East, and Brooklyn Ave are heavily impacted by groundwater contamination."
+          ]
+        }
+      ]
+    },
+    {
+      "query": "Kindly summarize the resolution of the southern illinois chapter",
+      "response": [
+        {
+          "type": "text",
+          "content": "The Southern Illinois Chapter of the Chemical Workers Union (CWU) officially endorsed the offer made by Hallman Inc. to the City of Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": "The union has supported Hallman Inc. during financial crises, negotiating contracts that benefited both workers and the company."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "8",
+          "title": "Resolution of the Southern Illinois Chapter of the Chemical Workers Union (CWU): Offer to the City of Bryn Bower by Hallman, Inc.",
+          "description": "Endorsed Hallman's plans to handle the Exafluoran contamination and urged the city to accept the offer for the sake of financial stability and labor security."
+        },
+        {
+          "type": "text",
+          "content": "The CWU believes that accepting Hallman's proposal will allow the city to effectively manage the environmental issues and enhance the financial predictability."
+        },
+        {
+          "type": "text",
+          "content": "This support fosters a stable working environment for union members and secures jobs, reflecting the union’s strategy of solidarity and stability."
+        }
+      ]
+    }
+  ]
+}

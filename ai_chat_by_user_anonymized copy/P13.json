@@ -1,0 +1,155 @@
+{
+  "participant_id": "P13",
+  "condition": "10_early",
+  "ai_chat": [
+    {
+      "query": "Give me a breakdown of each document in less than 5 bullet points each. Include any need-to-know information and summarize your findings",
+      "response": [
+        {
+          "type": "text",
+          "content": "Map of Bryn Bower indicating the contaminated areas (Page 2)"
+        },
+        {
+          "type": "text",
+          "content": [
+            "Shows approximately 30% of the city, including downtown areas, within the water extraction prohibition zone (greater than 20 ppb).",
+            "Indicates regions with 3-20 ppb contamination including Bryn Hill and Bryn Heights.",
+            "City Water Reservoirs A and B are in zones with minimal to no pollution."
+          ]
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "2",
+          "title": "Map of Bryn Bower indicting the contaminated areas",
+          "description": "Provides geographical visualization of contamination extents in Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": "Leaked confidential document on Hallman Cleanup Cost Estimates (Page 3)"
+        },
+        {
+          "type": "text",
+          "content": [
+            "Outlines extensive and expensive cleanup efforts with a focus on the >20 ppb contamination zone.",
+            "Predicts cost of containment and reduction efforts reaching up to $110M by 2030.",
+            "Details phased strategy including additional monitoring and possible need to increase city water capacity up to 30%."
+          ]
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Leaked Confidential Document - Hallman Cleanup Cost Estimates",
+          "description": "Provides projected cleanup costs and strategies for pollution reduction in Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": "Tumultuous Town Hall Meeting coverage by The Standard (Page 4)"
+        },
+        {
+          "type": "text",
+          "content": [
+            "Reports deeply divided community opinions over the proposed $19 million settlement with Hallman.",
+            "Details the heated debates and personal stories highlighted during the meeting, revealing mistrust towards Hallman's commitment.",
+            "Highlights the community's concerns about continued contamination and financial consequences."
+          ]
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Hallman Plume Scandal; Tumultuous BB Townhall Meeting",
+          "description": "Recaps the points of contention and public sentiments during the critical townhall meeting regarding Hallman's proposed settlement."
+        }
+      ]
+    },
+    {
+      "query": "How much of the city is still potentially drinking contaminated water?",
+      "response": [
+        {
+          "type": "text",
+          "content": "Bryn Bower has been dealing with groundwater contamination from Exafluoran, a chemical once used by Hallman Inc."
+        },
+        {
+          "type": "text",
+          "content": "Currently, about 700 homes around Bryn Bower still rely on private wells that might be affected by this contamination, with levels potentially within or exceeding 20 ppb, necessitating a connection to municipal water systems."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "1",
+          "title": "Scenario and Task",
+          "description": "Overview of Bryn Bower's ongoing struggle with Exafluoran contamination and its impact on local water sources."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The city has undertaken efforts to connect homes exceeding the 20 ppb limit to the municipal water system, as mandated by law."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "The purchase of a $19 million proposal by Hallman is currently under debate, intended to hasten this transition and resolve ongoing legal disputes."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "2",
+          "title": "Map of Bryn Bower indicating the contaminated areas",
+          "description": "A map highlighting the spread of contamination across the city, showing specific areas impacted like Bryn Hill and downtown regions."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The map details that the water extraction prohibition zone (>20ppb) covers nearly 30% of the city, including major areas like downtown Bryn."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Plans include immediate and future measures to prevent the worsening of this contamination through active area monitoring and containment."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "(Leaked Confidential Document) Hallman Cleanup Cost Estimates",
+          "description": "Details financial projections and strategic approaches for managing the Exafluoran plume."
+        },
+        {
+          "type": "text",
+          "content": [
+            "This document provides insights into the challenges and costs associated with decreasing the areas of contamination and the impact of these efforts on the city's financial resources."
+          ]
+        }
+      ]
+    },
+    {
+      "query": "what would the estimated cost be to replace their water access with clean water?",
+      "response": [
+        {
+          "type": "text",
+          "content": "The estimated costs of addressing the contaminated water issue in Bryn Bower, particularly through replacing water access to clean municipal sources, is influenced by various factors. Initially, Hallman Inc. proposed a simple, one-time payment"
+        },
+        {
+          "type": "text",
+          "content": "solution for connecting all contaminated homes to the city's municipal water system."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "1",
+          "title": "Scenario and Task",
+          "description": "Hallman proposed a $15 million payment to connect homes with contamination levels between 3-20 ppb to the municipal system. This deal was later negotiated up to $19 million by the mayor."
+        },
+        {
+          "type": "text",
+          "content": "Exploring the cleanup costs provides further insight into the financial burden involved."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "(Leaked Confidential Document) Hallman Cleanup Cost Estimates",
+          "description": "The leaked document reveals that the projected costs for plume cleanup are estimated to be between $45M-$110M until 2030, varying with the intensity of cleanup efforts."
+        },
+        {
+          "type": "text",
+          "content": "These cost estimates show a significant financial commitment needed to reduce the contamination impact and ensure safe drinking water access."
+        }
+      ]
+    }
+  ]
+}

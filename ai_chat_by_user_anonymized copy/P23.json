@@ -1,0 +1,64 @@
+{
+  "participant_id": "P23",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "Can you sum up the interview for me real quick",
+      "response": [
+        {
+          "type": "text",
+          "content": "Overview of David Hallman Sr. Interview:"
+        },
+        {
+          "type": "text",
+          "content": "David Hallman Sr., founder of Hallman Inc., reflects on the company’s legacy and its impact on both the industry and the environmental issues in Bryn Bower. Despite acknowledging the contamination caused by their operations, he emphasizes the standard legal practices of the time and the company’s significant role in enhancing the safety of nuclear power plants across the US."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "7",
+          "title": "Interview with David Hallman Sr., founder of Hallman Inc., on his 90th birthday",
+          "description": "Historical insight into Hallman Inc.'s contributions and controversies from its founder."
+        },
+        {
+          "type": "text",
+          "content": [
+            "In the interview, Hallman Sr. addresses the negative attention his company received due to groundwater pollution with Exafluoran, explaining that the practices were conforme to the standards of the 1960s and early 1970s. He also notes the significant contributions of Hallman Inc.'s engineering advancements to nuclear power safety, suggesting that incidents like the Chernobyl disaster could have been avoided with their technology."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "David Hallman Sr. expresses regret over the contamination but also offers a perspective on the massive financial efforts made by his family to mitigate the environmental impact. He maintains pride in the pivotal role his company played in the technological progression of industrial pumps used in high-stress environments."
+        }
+      ]
+    },
+    {
+      "query": "can you sum up the resolution",
+      "response": [
+        {
+          "type": "text",
+          "content": "The resolution by the Southern Illinois Chapter of the Chemical Workers Union (CWU) primarily supports the proposal made by Hallman Inc. to the city of Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": "It highlights the union’s historical negotiations that balanced economic challenges with fair labor practices, helping Hallman Inc. remain financially viable."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "8",
+          "title": "Resolution of the Southern Illinois Chapter of the Chemical Workers Union (CWU)",
+          "description": "Endorsement of Hallman Inc.'s offer to mitigate financial uncertainty due to cleanup efforts."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The CWU agrees with management’s decision citing its necessity for both the community’s environmental safety and the company’s economic stability."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Understanding the union’s perspective adds depth to evaluating the long-term benefits and challenges of the Hallman Inc. proposal."
+        }
+      ]
+    }
+  ]
+}
