@@ -18,6 +18,8 @@ This repository contains the anonymized data and analysis code for the paper *["
 │   ├── early_access_data.xlsx                      # Behavioral logs for Early AI access conditions (n = 90)
 │   ├── late_access_data.xlsx                       # Behavioral logs for Late AI access conditions (n = 98)
 │   └── task_approaches.xlsx                        # Qualitative coding of AI task approach strategies (n = 393)
+├── ai_chat_data/                         # Per-user AI chat transcripts (for participants with AI access)
+│   └── <anonymized_id>.json
 ├── main_results_plots/                   # Generated plots from main analyses
 ├── behavioral_engagement_plots/          # Generated plots from behavioral analyses
 ├── Critical_Thinking_Main_Analyses.Rmd   # Main statistical analyses
