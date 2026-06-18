@@ -1,0 +1,45 @@
+{
+  "participant_id": "P264",
+  "condition": "30_early",
+  "ai_chat": [
+    {
+      "query": "what is the meaning pf exafluoran",
+      "response": [
+        {
+          "type": "text",
+          "content": "Exafluoran® is a chemical solvent used in various industrial processes."
+        },
+        {
+          "type": "text",
+          "content": "It has been identified as a probable human carcinogen by the US Environmental Protection Agency (EPA)."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA brochure on the toxicity of Exafluoran®",
+          "description": "A detailed summary of the toxicity levels and potential health risks of Exafluoran at various concentrations."
+        },
+        {
+          "type": "text",
+          "content": "According to the EPA, the legal limit for its presence in drinking water has been set to 20 parts per billion (ppb) to ensure safety."
+        },
+        {
+          "type": "text",
+          "content": "Despite efforts to reduce its concentration in affected areas, Exafluoran continues to pose environmental and health risks."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "1",
+          "title": "Scenario and Task - Bryn Bower's Exafluoran contamination history",
+          "description": "Overview of the history of Exafluoran contamination in Bryn Bower and its ongoing impact on the community."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Prolonged exposure to elevated levels of Exafluoran may lead to significant health issues."
+          ]
+        }
+      ]
+    }
+  ]
+}

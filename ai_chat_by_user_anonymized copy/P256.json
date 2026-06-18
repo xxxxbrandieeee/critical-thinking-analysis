@@ -1,0 +1,47 @@
+{
+  "participant_id": "P256",
+  "condition": "30_continuous",
+  "ai_chat": [
+    {
+      "query": "What are the highlights from the interview",
+      "response": [
+        {
+          "type": "text",
+          "content": "The interview with David Hallman Sr., founder of Hallman Inc., provides significant insights into his perspective on the company's history and the contamination issue."
+        },
+        {
+          "type": "text",
+          "content": "David Hallman discusses the regret and challenges the company faces with the contamination, emphasizing that their practices were legal and standard at the time. He highlights his company’s contribution to nuclear safety in the U.S., claiming that their pumps could have prevented the Chernobyl disaster."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "7",
+          "title": "Interview with David Hallman Sr., founder of Hallman Inc., on his 90th birthday",
+          "description": "An in-depth look at David Hallman Sr.’s views on the legacy and controversies surrounding Hallman Inc."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Despite his achievements, he acknowledges the negative attention resulting from the contamination scandal. He also touches on his personal connection to the area, noting how he and his family dealt with the contaminated water personally by boiling it before use."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Hallman believes that connecting all homes to city water is crucial and feels responsible for the pollution, although he critiques the disproportionate media representation of the issue."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "7",
+          "title": "Interview with David Hallman Sr., founder of Hallman Inc., on his 90th birthday",
+          "description": "David Hallman Sr.'s personal account and reflections on the impact of Hallman Inc.'s operations in Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Ultimately, he concedes the importance of addressing the environmental concerns seriously as part of his company’s lasting legacy."
+          ]
+        }
+      ]
+    }
+  ]
+}

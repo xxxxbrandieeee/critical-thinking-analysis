@@ -1,0 +1,63 @@
+{
+  "participant_id": "P275",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "Do you support the idea ",
+      "response": [
+        {
+          "type": "text",
+          "content": "The complexity of the Exafluoran contamination in Bryn Bower has led to a controversial proposal from Hallman Inc."
+        },
+        {
+          "type": "text",
+          "content": "Investigating the implications of this proposal reveals a community deeply divided and concerned about long-term environmental impacts and corporate responsibility."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "2",
+          "title": "Map of Bryn Bower indicating the contaminated areas",
+          "description": "Shows significant contamination in downtown areas and less in city water reservoirs, providing geographical context to the Exafluoran plume's impact."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Understanding the spatial extent of pollution provides an immediate visual grasp of the affected areas and the scale of potential remediation."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "A multi-faceted problem, this controversy involves environmental, legal, and financial dimensions."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Hallman Cleanup Cost Estimates",
+          "description": "Details the financial burdens and strategies Hallman Inc. is considering to manage the cleanup, indicating proposed expenditures of up to $110M until 2030."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The cleanup cost report directly relates to the financial aspects of the proposed deal, highlighting the significant expenses involved in extensive environmental remediation."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Public reaction is mixed, ranging from strong opposition to those advocating for immediate practical solutions."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Hallman Plume Scandal; Tumultuous BB Townhall Meeting",
+          "description": "Captures the heated debate within the community, with expressions of betrayal and distrust towards Hallman balanced against pragmatic arguments for accepting the deal."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The townhall meeting, clearly divided, presents a microcosm of the broader socio-political tensions and highlights the complexities of reaching a consensus on environmental justice and corporate accountability."
+          ]
+        }
+      ]
+    }
+  ]
+}

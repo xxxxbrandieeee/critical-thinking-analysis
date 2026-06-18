@@ -1,0 +1,25 @@
+{
+  "participant_id": "P234",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "How much money will it cost for Hallman now and in the future to clean up this mess",
+      "response": [
+        {
+          "type": "text",
+          "content": "The financial burden faced by Hallman Inc. for the cleanup of the Exafluoran contamination in Bryn Bower is substantial and ongoing."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Leaked Confidential Document: Hallman Cleanup Cost Estimates",
+          "description": "This document provides a detailed analysis of the projected costs for cleaning up the environmental pollution caused by Exafluoran at the site. The cost estimates range from $4.5 million to $11 million per year, totaling between $45 million and $110 million by 2030."
+        },
+        {
+          "type": "text",
+          "content": "The cleanup effort involves a range of strategies, including the installation of additional monitoring and extraction wells to contain and reduce the contamination."
+        }
+      ]
+    }
+  ]
+}

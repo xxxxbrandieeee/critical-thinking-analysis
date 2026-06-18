@@ -1,0 +1,63 @@
+{
+  "participant_id": "P276",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "summurize the offer to the city of byrn bower by hallman",
+      "response": [
+        {
+          "type": "text",
+          "content": "Hallman Inc. proposed a settlement to the city of Bryn Bower regarding the longstanding groundwater contamination issue caused by Exafluoran. The company suggested a one-time payment of $15 million, later negotiated up to $19 million."
+        },
+        {
+          "type": "text",
+          "content": "This amount is intended to facilitate the immediate connection of approximately 400 houses, whose well water shows Exafluoran contamination levels between 3-20 ppb, to the municipal water system."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "1",
+          "title": "Scenario and Task",
+          "description": "Overview of the settlement proposal and its stipulations for Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": [
+            "In exchange for this payment, the city would drop all pending lawsuits against Hallman and assume future liabilities for any Exafluoran contamination outside the company's property, provided it doesn't exceed 50 ppb."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "The resolution proposed is seen by some as a financially prudent way to address the health risks and legal battles persistently affecting the community."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "5",
+          "title": "Pamphlet: Clean Bryn Bower Initiative (CBBI) Says No to Hallman Proposal",
+          "description": "Details the opposition from the Clean Bryn Bower Initiative who argue against the settlement offer."
+        },
+        {
+          "type": "text",
+          "content": [
+            "However, the proposal has strongly divided the city, with significant public concern about letting Hallman off lightly given the historical and potential future impact of the pollution."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "The final decision on whether to accept the offer awaits the outcome of an extraordinary city council meeting, reflecting the deep divisions and the significance of this decision on the city's future."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Hallman Plume Scandal; Tumultuous BB Townhall Meeting",
+          "description": "Coverage of the public division and contentious townhall meeting concerning Hallman's settlement proposal."
+        },
+        {
+          "type": "text",
+          "content": [
+            "This financial decision intersects not just with the city's public health and environmental responsibilities but also the wary public trust towards Hallman Inc., evidenced at the tumultuous townhall meeting."
+          ]
+        }
+      ]
+    }
+  ]
+}

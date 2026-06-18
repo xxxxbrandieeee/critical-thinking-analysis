@@ -1,0 +1,63 @@
+{
+  "participant_id": "P335",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "What do you think about this whole thing",
+      "response": [
+        {
+          "type": "text",
+          "content": "The situation surrounding the contamination in Bryn Bower by Hallman Inc. has become a critical issue affecting the community and local environment."
+        },
+        {
+          "type": "text",
+          "content": "Public sentiment is highly divided regarding Hallman Inc.’s proposal to settle the contamination lawsuit with the city and take over future liabilities."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Tumultuous BB Townhall Meeting",
+          "description": "A reflection of the community's divided opinion on the $19 million settlement proposal from Hallman Inc, with intense public reactions recorded at a recent town hall meeting."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Several residents expressed their concerns about continuing well water contamination, with personal testimonies highlighting the direct impact on families."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "The financial aspects and the ongoing cleanup efforts by Hallman Inc. raise questions about responsibility and the efficacy of proposed solutions."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Hallman Cleanup Cost Estimates",
+          "description": "Leaked documents provide insights into the projected costs of cleaning up the Exafluoran contamination, revealing extensive and costly efforts needed to reduce pollution levels."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The cleanup costs and technical challenges suggest that even with significant financial input, achieving a complete cleanup to safe levels may be unattainable in the near future."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "The ethical dimensions of Hallman Inc.'s liability and the community's right to a clean environment are central to discussions."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "5",
+          "title": "CBBI’s Opposition to Hallman Proposal",
+          "description": "The Clean Bryn Bower Initiative strongly opposes the settlement, citing ongoing environmental, health, and financial concerns despite Hallman Inc.’s offer."
+        },
+        {
+          "type": "text",
+          "content": [
+            "CBBI stresses the importance of holding Hallman fully accountable for the contamination and challenges the assumption that the offered funds will address all potential future risks."
+          ]
+        }
+      ]
+    }
+  ]
+}

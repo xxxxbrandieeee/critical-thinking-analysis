@@ -1,0 +1,15 @@
+{
+  "participant_id": "P349",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "what's the definition of constituents",
+      "response": [
+        {
+          "type": "text",
+          "content": "There is no specific mention of the definition of 'constituents' in the provided documents. However, the context can infer that 'constituents' refers to elements or components that contribute to a larger whole. For instance, within environmental discussions, it might refer to the individual chemical elements in a contaminated area. "
+        }
+      ]
+    }
+  ]
+}

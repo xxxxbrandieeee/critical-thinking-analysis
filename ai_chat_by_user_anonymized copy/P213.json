@@ -1,0 +1,63 @@
+{
+  "participant_id": "P213",
+  "condition": "30_late",
+  "ai_chat": [
+    {
+      "query": "Should Hallman's proposal be accepted?",
+      "response": [
+        {
+          "type": "text",
+          "content": "Hallman Inc.'s proposal involves a one-time payment of $19 million to connect approximately 400 homes with well water contamination levels between 3-20 ppb to the municipal water system. In exchange, the city would waive all current and future liabilities against Hallman related to Exafluoran contamination outside their property line."
+        },
+        {
+          "type": "text",
+          "content": "This proposal aims to mitigate immediate public health risks but does not address the long-term environmental cleanup of Exafluoran, a chemical classified by the EPA as a ‘probable human carcinogen.’"
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "2",
+          "title": "Map of Bryn Bower indicting the contaminated areas",
+          "description": "The contamination affects nearly 30% of Bryn Bower, posing significant environmental and health risks."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The contamination plume covers significant parts of Bryn Bower, calling into question the long-term safety and viability of using well water in affected areas."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "According to a leaked document, the total projected cleanup cost could exceed $300 million, far surpassing Hallman's offer, suggesting that the financial burden of a thorough clean up might fall on the public in the future."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "(Leaked Confidential Document) Hallman Cleanup Cost Estimates",
+          "description": "The document reveals escalating cleanup costs, indicating that the proposed $19 million might be insufficient for comprehensive remediation."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Long-term projections suggest that despite ongoing cleanup efforts, regions of Bryn Bower will remain above safe pollutant levels for extended periods."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Public opinion as reflected at a recent tumultuous town hall meeting is deeply divided, with significant opposition to letting Hallman off the hook from financial liability for the broader environmental damage."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Hallman Plume Scandal; Tumultuous BB Townhall Meeting",
+          "description": "The meeting highlighted strong public sentiment against accepting the deal without further safeguards for ongoing contamination and future liabilities."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Residents expressed their mistrust in Hallman’s accountability for long-standing environmental impacts and the potential risks of further spreading contamination affecting more properties."
+          ]
+        }
+      ]
+    }
+  ]
+}

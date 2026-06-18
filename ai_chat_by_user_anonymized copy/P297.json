@@ -1,0 +1,47 @@
+{
+  "participant_id": "P297",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "which choice makes the most sense to you if you are a human affected by this?",
+      "response": [
+        {
+          "type": "text",
+          "content": "The ongoing dilemma facing Bryn Bower, where Hallman Inc.’s proposal has deeply divided the community, requires a multifaceted consideration, especially from the perspective of residents directly affected by Exafluoran contamination."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Hallman Plume Scandal; Tumultuous BB Townhall Meeting",
+          "description": "Details public opinions and the contentious townhall meeting where citizens expressed strong views for and against Hallman's proposal."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The townhall meeting revealed a community painfully split, with some calling for immediate pragmatic solutions, and others deeply mistrustful of Hallman’s intentions and skeptical of the safety assurances provided."
+          ]
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "5",
+          "title": "Pamphlet: Clean Bryn Bower Initiative (CBBI) Says No to Hallman Proposal - WE SAY: “NO”! CITY COUNCIL: VOTE “NO”!",
+          "description": "Articulates a staunch opposition to Hallman’s proposal, arguing that full accountability should not be evaded."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The CBBI pamphlet underscores the sentiment of residents who feel that the proposal lets Hallman off too easily, compromising the long-term environmental and health interests of the community for short-term financial relief."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "For a resident directly impacted by the Exafluoran contamination, the most sensible choice might align with the perspectives documented in the townhall meeting and the arguments presented by the CBBI."
+        },
+        {
+          "type": "text",
+          "content": "The decision would ideally be driven by a desire for comprehensive accountability and long-term environmental recovery, rather than accepting a quick fiscal solution that may not address all future risks."
+        }
+      ]
+    }
+  ]
+}

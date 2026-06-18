@@ -1,0 +1,49 @@
+{
+  "participant_id": "P321",
+  "condition": "30_early",
+  "ai_chat": [
+    {
+      "query": "are you familiar with the document ive been provided",
+      "response": [
+        {
+          "type": "text",
+          "content": "You are provided with detailed documents related to the environmental and public health issues in Bryn Bower, particularly concerning the contamination from Hallman Inc."
+        },
+        {
+          "type": "text",
+          "content": "These documents include maps, confidential company information, newspaper articles, activist pamphlets, EPA brochures, interviews, and union resolutions."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "2",
+          "title": "Map of Bryn Bower indicating the contaminated areas",
+          "description": "Shows areas affected by Exafluoran contamination."
+        },
+        {
+          "type": "text",
+          "content": "The map outlines significant contamination, which impacts property values and public health in parts of the city."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Leaked Confidential Document - Hallman Cleanup Cost Estimates",
+          "description": "Provides projected costs and strategies for remediation efforts."
+        },
+        {
+          "type": "text",
+          "content": "This document suggests that complete decontamination is challenging and expensive, recommending ongoing efforts focussed on specific areas."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Hallman Plume Scandal; Tumultuous BB Townhall Meeting",
+          "description": "Details the community's strong responses to the proposed settlement at a public meeting."
+        },
+        {
+          "type": "text",
+          "content": "Public reaction ranges from severe criticism to cautious support, reflecting deep divisions and a high stake in the decision-making process."
+        }
+      ]
+    }
+  ]
+}
