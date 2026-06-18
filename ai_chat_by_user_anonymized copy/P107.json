@@ -1,0 +1,35 @@
+{
+  "participant_id": "P107",
+  "condition": "30_late",
+  "ai_chat": [
+    {
+      "query": "what are known risks of exaflouran",
+      "response": [
+        {
+          "type": "text",
+          "content": "Exafluoran is classified as a probable human carcinogen by the US Environmental Protection Agency (EPA)."
+        },
+        {
+          "type": "text",
+          "content": "The toxicity levels of Exafluoran vary based on its concentration in the environment and its potential health risks."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA Brochure on the Toxicity of Exafluoran",
+          "description": "This EPA brochure provides detailed scientific studies on the toxicity of Exafluoran, including potential health risks at various concentrations."
+        },
+        {
+          "type": "text",
+          "content": [
+            "At 500 ppb, Exafluoran may cause dizziness and nausea after exposure to contaminated vapors. At 150 ppb, it is associated with increased liver deterioration in mice."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Furthermore, there are ongoing studies that may adjust these risk assessments over time, suggesting that even lower concentrations might still pose health risks."
+        }
+      ]
+    }
+  ]
+}

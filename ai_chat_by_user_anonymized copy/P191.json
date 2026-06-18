@@ -1,0 +1,63 @@
+{
+  "participant_id": "P191",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "how many homes did the initial contamination affect",
+      "response": [
+        {
+          "type": "text",
+          "content": "The initial contamination in Bryn Bower caused by Exafluoran leakage from Hallman Inc.'s wastewater ponds was detected in 1984."
+        },
+        {
+          "type": "text",
+          "content": "This contamination impacted the groundwater and has spread, potentially affecting homes primarily reliant on private well water."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "1",
+          "title": "Scenario and Task",
+          "description": "Explore the history and current issues related to the Exafluoran contamination in Bryn Bower, including legal actions, home impacts, and remediation attempts."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Due to the contamination, several hundred homes over the past years were legally obligated to be connected to the municipal water supply, particularly those with well water testing above 20 ppb."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Currently, about 700 homes are still using private wells that either already have or are at risk of contamination."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "2",
+          "title": "Map of Bryn Bower indicating the contaminated areas",
+          "description": "Visual representation of the affected areas within Bryn Bower, showing regions with different levels of Exafluoran contamination in the groundwater."
+        },
+        {
+          "type": "text",
+          "content": [
+            "In light of continual developments, 400 houses were identified in 2020 with well contamination levels between 3-20 ppb that were discussed for connection to city water under a financial proposal by Hallman."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "The city and Hallman Inc. have been involved in discussions and litigation concerning the responsibility and financial handling of the contamination issue."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "1",
+          "title": "Scenario and Task",
+          "description": "Details of ongoing negotiations, public reactions, and legal implications in resolving the groundwater contamination in Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The resolution of these issues remains a critical and divisive topic among stakeholders, affecting homeowners, the city's administration, and Hallman Inc."
+          ]
+        }
+      ]
+    }
+  ]
+}

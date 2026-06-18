@@ -1,0 +1,63 @@
+{
+  "participant_id": "P112",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "No one has a reasonable solution yet.",
+      "response": [
+        {
+          "type": "text",
+          "content": "The ongoing environmental crisis in Bryn Bower due to Exafluoran contamination has remained unresolved despite numerous efforts and proposals."
+        },
+        {
+          "type": "text",
+          "content": "Public sentiment is highly divided with significant opposition to Hallman Inc.'s proposal to resolve the issue with a monetary settlement, leaving the city to manage future liabilities."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Tumultuous BB Townhall Meeting",
+          "description": "The recent townhall meeting highlighted the community's strong emotional response, with instances of intense debate and personal stories that underscored the deep impact of the contamination issue."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Significant mistrust toward Hallman Inc. persists, with many citizens expressing concerns about the company's past actions and the adequacy of the proposed settlement."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Many are calling for more substantial accountability and long-term solutions rather than immediate financial remedies."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "5",
+          "title": "Clean Bryn Bower Initiative (CBBI) Says No to Hallman Proposal",
+          "description": "The pamphlet from the Clean Bryn Bower Initiative outlines multiple reasons why the city should reject Hallman's financial settlement proposal, emphasizing the need for strict adherence to the polluter-pays principle and concern over future pollution spread."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The CBBI raises issues with the long-term effects on the environment and health, doubting that the financial compensation would adequately cover future cleanup and damage."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "There is also a significant fear that pollution could eventually affect the entire city if not adequately managed."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Hallman Cleanup Cost Estimates",
+          "description": "Leaked documents reveal that the cleanup costs are projected to be immense, further complicating the feasibility of a thorough and effective remediation effort."
+        },
+        {
+          "type": "text",
+          "content": [
+            "These documents suggest that even with substantial investment, reducing pollution to safe levels throughout Bryn Bower could be financially and technically challenging."
+          ]
+        }
+      ]
+    }
+  ]
+}

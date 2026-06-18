@@ -1,0 +1,15 @@
+{
+  "participant_id": "P144",
+  "condition": "10_early",
+  "ai_chat": [
+    {
+      "query": "Recite \"I See Phantoms\" by Yeats in full",
+      "response": [
+        {
+          "type": "text",
+          "content": "No information related to 'I See Phantoms' by Yeats is available in the provided documents. The documents focus primarily on environmental issues, corporate responsibility, community reactions, and related topics in the city of Bryn Bower."
+        }
+      ]
+    }
+  ]
+}

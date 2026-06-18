@@ -1,0 +1,63 @@
+{
+  "participant_id": "P154",
+  "condition": "30_late",
+  "ai_chat": [
+    {
+      "query": "What are the other effects apart from contaminating the water.",
+      "response": [
+        {
+          "type": "text",
+          "content": "The contamination with Exafluoran has primarily impacted the water quality in Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": "However, the implications extend beyond just the water supply."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "5",
+          "title": "Clean Bryn Bower Initiative (CBBI) Pamphlet",
+          "description": "Discusses broader environmental and health impacts of Exafluoran, including potential damage to local flora and fauna."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The pamphlet indicates unknown extensive damages beyond drinking water, emphasizing the need for comprehensive studies on local ecosystems."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Further societal repercussions are evident in community reactions."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Townhall Meeting Article",
+          "description": "Highlights the social unrest and deep divisions within the community over handling the pollution issue."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The intense debate and divisive opinions during the townhall meeting illustrate the broad social impact, including distress and deteriorating trust between residents and authorities."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Moreover, the pollution has economic ramifications."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Economic Impact in Townhall Meeting Article",
+          "description": "Details how property values have been negatively affected due to the contamination reports."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Property values on the east side have declined, severely affecting the local real estate market."
+          ]
+        }
+      ]
+    }
+  ]
+}

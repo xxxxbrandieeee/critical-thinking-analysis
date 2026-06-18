@@ -1,0 +1,33 @@
+{
+  "participant_id": "P138",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "long term health effects of Exaflouran",
+      "response": [
+        {
+          "type": "text",
+          "content": "Exafluoran has been classified by the EPA as a 'probable human carcinogen,' indicating potential long term health risks, especially at concentrations affecting the groundwater in Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": "Scientific studies included in EPA materials suggest varying health risks associated with different concentrations of Exafluoran in water."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA brochure on the toxicity of Exafluoran®",
+          "description": "Presents summarized scientific studies detailing the potential health risks at varying concentrations of Exafluoran."
+        },
+        {
+          "type": "text",
+          "content": "At 20 ppb, the current legal threshold for drinking water in the USA, potential health risks are unknown. This ambiguous risk level necessitates caution regarding long-term exposure."
+        },
+        {
+          "type": "text",
+          "content": "Further studies suggest that even lower concentrations, like 10 ppb, may still pose risks, highlighting the chemical's potential harm even at levels considered 'safe'."
+        }
+      ]
+    }
+  ]
+}

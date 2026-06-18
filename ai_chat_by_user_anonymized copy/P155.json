@@ -1,0 +1,99 @@
+{
+  "participant_id": "P155",
+  "condition": "10_continuous",
+  "ai_chat": [
+    {
+      "query": "summerize the epa document on exafluoran",
+      "response": [
+        {
+          "type": "text",
+          "content": "The EPA provides a comprehensive evaluation of the toxicity levels of Exafluoran, a chemical solvent classified as a probable human carcinogen."
+        },
+        {
+          "type": "text",
+          "content": "Below are summarized concentration levels and associated risks based on a 2017 meta-data analysis."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA brochure on the toxicity of Exafluoran",
+          "description": "Highlights from EPA studies on Exafluoran toxicity at various concentrations"
+        },
+        {
+          "type": "text",
+          "content": [
+            "- At 10,000,000 ppb: Highly flammable, potential unexpected combustion.",
+            "- At 500 ppb: Contaminated vapors at room temperature with nausea and dizziness risks after short exposure.",
+            "- At 150 ppb: Discernable smell with increased liver deterioration observed in mice and detectable in human urine.",
+            "- At 80 ppb: Faint but pleasant smell, substance detectable in rat urine.",
+            "- At 35 ppb: Under Canada's legal threshold with unknown health risks.",
+            "- At 20 ppb: Current U.S. legal drinking water threshold with unknown health risks.",
+            "- At 10 ppb: Toxic to rare microbes with unknown health effects on humans.",
+            "- At 1 ppb: Detectable in routine water quality control, health risks unknown."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "The document demonstrates varying risks associated with Exafluoran presence in water, reinforcing the need for strict regulatory measures and continued monitoring."
+        }
+      ]
+    },
+    {
+      "query": "what are the risks",
+      "response": [
+        {
+          "type": "text",
+          "content": "Exafluoran® is identified as a 'probable human carcinogen' by the EPA, leading to significant health concerns."
+        },
+        {
+          "type": "text",
+          "content": "Studies have shown various health risks at different concentrations of Exafluoran in water, such as liver deterioration and the potential for unexpected combustion at high concentrations."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA Brochure on the Toxicity of Exafluoran®",
+          "description": "Details concentrations and associated health risks of Exafluoran®."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Affected water below 20 ppb may soon require legal action to connect to safer municipal water supplies, raising future financial and logistical issues for Bryn Bower."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Ongoing contamination from past industrial activities poses long-term environmental risks to local ecosystems, potentially affecting flora and fauna."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "5",
+          "title": "Clean Bryn Bower Initiative (CBBI) Opposes Hallman Proposal",
+          "description": "Illustrates concerns regarding the future environmental impact beyond drinking water safety."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The Clean Bryn Bower Initiative (CBBI) argues that zero ppb is the only truly safe level, challenging the current EPA standards."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Scientific understanding may evolve, potentially revealing unknown risks at lower concentrations currently deemed safe."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Leaked Confidential Document from Hallman Inc.",
+          "description": "Provides projections for increasingly high costs of reducing contamination levels further, highlighting financial risks."
+        },
+        {
+          "type": "text",
+          "content": [
+            "High clean-up costs and possible financial strain on Hallman Inc. could threaten the company's viability, affecting local employment and economy."
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "participant_id": "P169",
+  "condition": "30_early",
+  "ai_chat": [
+    {
+      "query": "how much did hallman offer",
+      "response": [
+        {
+          "type": "text",
+          "content": "Hallman Inc. initially proposed a financial settlement to address the water contamination issue in Bryn Bower."
+        },
+        {
+          "type": "text",
+          "content": "The company initially offered $15 million to connect all homes with a well contamination level between 3 and 20 ppb to the municipal water system."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "1",
+          "title": "Scenario and Task",
+          "description": "Details of Hallman Inc.'s initial proposal and subsequent negotiations with the city."
+        },
+        {
+          "type": "text",
+          "content": "After negotiations, the mayor was able to increase Hallman's financial commitment."
+        },
+        {
+          "type": "text",
+          "content": "Hallman raised its offer to $19 million in a final proposal, aimed at resolving pending lawsuits and future liabilities related to the Exafluoran contamination."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "1",
+          "title": "Scenario and Task",
+          "description": "Overview of the increased financial offer following negotiations."
+        },
+        {
+          "type": "text",
+          "content": "This proposal was highly controversial and led to intense discussions during a public townhall meeting."
+        },
+        {
+          "type": "text",
+          "content": "Citizens expressed strong opinions, both in favor and against the proposal, reflecting the deep divisions within the community."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "4",
+          "title": "Hallman Plume Scandal; Tumultuous BB Townhall Meeting",
+          "description": "Description of the public's reaction to Hallman's proposal during the townhall meeting."
+        },
+        {
+          "type": "text",
+          "content": "The ongoing public debate exemplifies the complex challenges the city faces in balancing environmental remediation with financial realism."
+        }
+      ]
+    }
+  ]
+}

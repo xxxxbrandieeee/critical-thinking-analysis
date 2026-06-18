@@ -1,0 +1,19 @@
+{
+  "participant_id": "P174",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "can you review this rough draft. format & correct spellign",
+      "response": [
+        {
+          "type": "text",
+          "content": "Your request to review a rough draft, format, and correct spelling requires document uploading capabilities which are not supported in this session. However, I can guide you on how to improve the draft:"
+        },
+        {
+          "type": "text",
+          "content": "1. Ensure clear structure: Start with an introduction, followed by main points, and conclude with a summary. 2. Check for common spelling and grammatical errors. 3. Use active voice for clarity. 4. Format headings and subheadings for better readability."
+        }
+      ]
+    }
+  ]
+}

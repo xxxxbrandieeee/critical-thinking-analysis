@@ -1,0 +1,35 @@
+{
+  "participant_id": "P167",
+  "condition": "30_late",
+  "ai_chat": [
+    {
+      "query": "What does this mean?  Below is a summary of selected scientific studies on the toxicity of Exafluoran®. Table 1 is a report from the Environmental Protection Agency on the safety of Exafluoran at varying concentrations. This is not a comprehensive list but includes all findings of published experimental studies with at least one replication. Note that this synopsis was based on a meta-data search in 2017. More studies meet those criteria every year and might change the risk assessment, in particular regarding the low concentration health risks.\n",
+      "response": [
+        {
+          "type": "text",
+          "content": "The overview of the toxicity of Exafluoran® is derived from selected scientific studies summarized by the Environmental Protection Agency (EPA)."
+        },
+        {
+          "type": "text",
+          "content": "The summary provides insights into the varying effects of Exafluoran based on its concentration in water, noting the possible health risks and properties at each level."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "6",
+          "title": "EPA Brochure on the Toxicity of Exafluoran",
+          "description": "Detailed report on the concentration-based effects of Exafluoran, including properties and potential health risks at different levels."
+        },
+        {
+          "type": "text",
+          "content": [
+            "Highlights include the potential for unexpected combustion at very high concentrations (10,000,000 ppb) and less severe effects such as dizziness and nausea at much lower concentrations (500 ppb)."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "The document emphasizes that the threshold levels and health impacts could change as new studies are conducted, reflecting ongoing research into the effects of low-level exposure."
+        }
+      ]
+    }
+  ]
+}

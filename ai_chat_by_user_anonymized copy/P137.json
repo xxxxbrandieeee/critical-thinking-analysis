@@ -1,0 +1,39 @@
+{
+  "participant_id": "P137",
+  "condition": "10_late",
+  "ai_chat": [
+    {
+      "query": "how much would it cost to clean up the contaminated area from the hallman inc leak?",
+      "response": [
+        {
+          "type": "text",
+          "content": "The cleanup costs for the contaminated area from the Hallman Inc. leak are extensive and have varied over time."
+        },
+        {
+          "type": "text",
+          "content": "The leaked confidential document provides detailed estimates and projected costs for cleaning efforts up until 2030."
+        },
+        {
+          "type": "document_reference",
+          "doc_id": "3",
+          "title": "Leaked Confidential Hallman Cleanup Cost Estimates",
+          "description": "The document illustrates a range of cleanup scenarios with costs projected from $45M to $110M by 2030."
+        },
+        {
+          "type": "text",
+          "content": [
+            "The document emphasizes the technical difficulty and high costs associated with reducing contamination levels below 10 ppb, estimating that a complete area clean-up would be cost-prohibitive, exceeding $300M."
+          ]
+        },
+        {
+          "type": "text",
+          "content": "Earlier reductions in contamination have already been costly, with significant financial resources spent on reducing levels substantially below critical thresholds."
+        },
+        {
+          "type": "text",
+          "content": "Focus is recommended on continued monitoring and targeting areas still above 20 ppb with extraction wells to manage the contamination."
+        }
+      ]
+    }
+  ]
+}
