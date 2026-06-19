@@ -83,7 +83,7 @@ The `ai_chat_data/` folder contains one JSON file per participant who used the L
 }
 ```
 
-Each turn has a `query` (the participant's meassage) and a `response`, which is an ordered list of excerpts. Each excerpt is one of three types: `text` (a paragraph), or `document_reference` (a referenced source document, with its `doc_id`, `title`, and `description`). Preserving the order keeps each document reference attached to the excerpt it accompanies.
+Each turn has a `query` (the participant's meassage) and a `response`, which is an ordered list of excerpts. Each excerpt is one of two types: `text` (a paragraph), or `document_reference` (a referenced source document, with its `doc_id`, `title`, and `description`). Preserving the order keeps each document reference attached to the excerpt it accompanies.
 
 ---
 
